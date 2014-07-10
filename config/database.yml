@@ -1,0 +1,19 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  pool: 5
+  username: root
+  password: 
+
+development:
+  <<: *default
+  database: crm
+
+test:
+  <<: *default
+  database: crm_test
+
+production:
+  <<: *default
+  database: crm
