@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    title 客户关系管理系统
+    meta name="keywords" content="crm"
+    meta name="author" content="Star"
+    meta name="viewport" content="width=device-width, initial-scale=1"
+    = csrf_meta_tags
+  body
+    = form_tag('http://bcr1.intsig.net/BCRService/BCR_VCF2?PIN=249752043073482&user=137379612@qq.com&pass=EF7XDHHQXCQJDG63&lang=15&size=10524', multipart: true) do
+      = file_field_tag :upfile, "accept" => "image/jpg"
+      <br />
+      = submit_tag t("label_confirm")

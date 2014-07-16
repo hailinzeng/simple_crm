@@ -1,4 +1,31 @@
 Rails.application.routes.draw do
+
+  get '/home' => 'home#index'
+  
+  resources :sessions
+
+  resources :users do
+    resources :reset do
+      collection do
+        patch :password
+      end
+    end
+    collection do
+      get :customers
+    end
+  end
+
+  resources :customers do
+    collection do
+      get  :capture_card
+      post :card_analyze
+      post :search
+    end
+    resources :communications
+  end
+
+  resources :communications
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

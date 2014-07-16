@@ -1,0 +1,8 @@
+= form_tag(sessions_path) do
+  div data-role="fieldcontain"
+    = label_tag :login, t("label_user_login") + ":"
+    = text_field_tag :login
+    = label_tag :password, t("label_user_password") + ":"
+    = password_field_tag :password
+  = submit_tag t("label_login"), "data-inline" => true
+javascript:

@@ -1,0 +1,15 @@
+h3 = t("label_communication_record")
+table data-role="table" id="movie-table" data-mode="reflow" class="ui-responsive table"
+  thead
+    tr
+      th = t("communication.name")
+      th = t("communication.channel")
+      th = t("communication.comment")
+  tbody
+    - @communications.each do |communication|
+      tr
+        td = communication.name
+        td = communication.channel
+        td = communication.comment
+ul class="pagination"
+    = paginate @communications

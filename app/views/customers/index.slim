@@ -1,0 +1,20 @@
+= form_tag(customers_path, method: :get) do
+  = date_field_tag :start_at, (Date.today-1)
+  = date_field_tag :end_at, Date.today
+  = submit_tag t("label_find"), "data-inline" => true, "data-icon" => "search", "data-inline" => true
+
+h2 总用户
+table data-role="table" id="movie-table" data-mode="reflow" class="ui-responsive table"
+  thead
+    tr
+      th = t("customer.name")
+      th = t("customer.mobile")
+      th = t("customer.created_at")
+  tbody
+    - @customers.each do |customer|
+      tr
+        td = customer.name
+        td = customer.mobile
+        td = format_datetime(customer.created_at)
+ul class="pagination"
+    = paginate @customers
