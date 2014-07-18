@@ -28,6 +28,10 @@ module ApplicationHelper
     @current_user
   end
 
+  def admin?
+    @current_user.role_root?
+  end
+
   def login_from_session
     if session[:user_id].present?
       begin

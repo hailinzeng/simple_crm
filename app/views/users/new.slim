@@ -1,14 +1,16 @@
 = form_for @user do |f|
   div data-role="fieldcontain"
-    = f.label :login, t("label_user_login") + ":"
+    = f.label :login, User.human_attribute_name(:login) + ":"
     = f.text_field :login, required: true
-    = f.label :password, t("label_user_password") + ":"
+    = f.label :password, User.human_attribute_name(:password) + ":"
     = f.password_field :password, required: true
-    = f.label :password_confirmation, t("label_user_confirmation_password") + ":"
+    = f.label :password_confirmation, User.human_attribute_name(:password_confirmation) + ":"
     = f.password_field :password_confirmation, required: true
-    = f.label :role, t("label_user_role") + ":"
+    = f.label :role, User.human_attribute_name(:role) + ":"
     = f.select :role, options_for_select(User.roles), required: true
-    = f.label :city_id, t("label_city") + ":"
-    = f.text_field :city_id, required: true
+    = f.label :name, User.human_attribute_name(:name) + ":"
+    = f.text_field :name, required: true
+    = f.label :city, User.human_attribute_name(:city) + ":"
+    = f.text_field :city, required: true
 
   = f.submit t("label_register"), "data-inline" => true

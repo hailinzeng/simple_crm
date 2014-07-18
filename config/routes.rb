@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       end
     end
     collection do
+      get :profile
       get :customers
     end
   end
@@ -24,7 +25,12 @@ Rails.application.routes.draw do
     resources :communications
   end
 
-  resources :communications
+  resources :admin do
+    collection do
+      get  :edit_city
+      post :permission_assign
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

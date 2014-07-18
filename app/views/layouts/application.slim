@@ -5,14 +5,18 @@ html
     meta name="keywords" content="crm"
     meta name="author" content="Star"
     meta name="viewport" content="width=device-width, initial-scale=1"
-    = stylesheet_link_tag  'jquery.mobile-1.4.3.min', 'application', media: 'all'
+    = stylesheet_link_tag 'jquery.mobile-1.4.3.min', 'application', media: 'all'
     = javascript_include_tag 'jquery.min', 'jquery.mobile-1.4.3.min', 'application'
     = csrf_meta_tags
   body
-    div data-role="page"
+    div data-role="page" data-url = request.path
       div data-role="header"
-        a href="/home" data-role="button" data-icon="home" 首页
+        - if @current_user.role_root?
+          a href="/admin" data-role="button" data-icon="grid" = t('label_admin')
         h1 CRM
+        div class="ui-btn-right" data-role="controlgroup" data-type="horizontal"
+          span = t('label_current_user') + ": " + @current_user.login
+          = link_to t('label_logout'), session_path(@current_user), method: :delete
         div data-role="navbar"
           ul
             = render_navigation(level: 1..2, expand_all: true)
@@ -20,4 +24,4 @@ html
         = render 'share/flash_message'
         == yield
       div data-role="footer"
-        h1 车牛
+        h1 大搜车

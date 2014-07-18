@@ -11,22 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 4) do
+ActiveRecord::Schema.define(version: 5) do
 
   create_table "cities", force: true do |t|
-    t.string   "name_chn"
-    t.string   "name_eng"
-    t.string   "name_pinyin"
-    t.string   "region_chn"
-    t.string   "region_eng"
-    t.string   "region_pinyin"
-    t.string   "country_chn"
-    t.string   "country_eng"
-    t.string   "country_pinyin"
-    t.decimal  "latitude",       precision: 16, scale: 8, default: 0.0
-    t.decimal  "longitude",      precision: 16, scale: 8, default: 0.0
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string  "name"
+    t.integer "province_id"
   end
 
   create_table "communications", force: true do |t|
@@ -61,6 +50,10 @@ ActiveRecord::Schema.define(version: 4) do
     t.datetime "import_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "provinces", force: true do |t|
+    t.string "name"
   end
 
   create_table "users", force: true do |t|

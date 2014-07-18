@@ -6,6 +6,7 @@ gem 'slim'  # 模板
 gem 'simple-navigation', require: 'simple-navigation' # 导航
 gem 'kaminari' # 分页
 
+gem 'redis-objects'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyrhino'
 # Use jquery as the JavaScript library

@@ -13,9 +13,9 @@ class CustomersController < ApplicationController
   def create
     @customer = Customer.new(customer_params)
     if @customer.save
-      redirect_to new_customer_path, notice: '客户已添加' and return
+      redirect_to new_customer_path, success: '客户已添加'
     else
-      redirect_to new_customer_path, alert: @customer.errors.full_messages and return
+      redirect_to new_customer_path, alert: @customer.errors.full_messages
     end
   end
 

@@ -164,8 +164,14 @@ zh-CN:
   activerecord:
     attributes:
       user:
+        login: "用户名"
         password: "密码"
         password_confirmation: "确认密码"
+        name: "姓名"
+        role: "角色"
+        mobile: "手机号码"
+        city: "所在地"
+        cities: "城市列表"
     errors:
       template: # ~ 2.3.5 backward compatible
         header:
@@ -244,15 +250,8 @@ zh-CN:
       next: "下一页"
       truncate: "..."
 
-  label_user_login: "用户名"
-  label_user_password: "密码"
-  label_user_new_password: "新密码"
-  label_user_confirmation_password: "确认密码"
-  label_user_role: "角色"
-  label_user_name: "姓名"
-  label_user_email: "邮箱"
-  label_user_mobile: "手机"
   label_login: "登录"
+  label_logout: "退出"
   label_register: "注册"
   label_save: "保存"
   label_confirm: "确定"
@@ -272,3 +271,10 @@ zh-CN:
   label_capture_card: "拍名片"
   label_add_customer: "手动创建客户"
   label_my_customers: "我的客户"
+  label_admin: "后台管理"
+  label_place: "地点"
+  label_my_location: '我的位置'
+
+  input_place_tip: "请输入省份或者城市，例如：杭州 或者 浙江"
+  label_not_customer: '没有客户'
+  label_current_user: '当前用户'

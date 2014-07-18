@@ -11,7 +11,7 @@ SimpleNavigation::Configuration.run do |navigation|
       end
       primary.item :profile, '个人信息', 'javascript:;' do |profile|
         profile.selected_class = 'ui-btn-active'
-        profile.item :update, '个人主页',user_path(@current_user)
+        profile.item :update, '个人主页', profile_users_path
         profile.item :pwd_reset, '重置密码', user_reset_index_path(@current_user)
       end
     end

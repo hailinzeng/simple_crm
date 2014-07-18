@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
 
   def new
     if logined?
-      redirect_to user_path(@current_user)
+      redirect_to profile_users_path
     else
       render layout: "session"
     end
@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
     if @user
       set_current_user(@user)
       flash[:success] = "登录成功啦,激情的一天又开始啦."
-      redirect_back_or_default user_path(@user)
+      redirect_back_or_default profile_users_path
     else
       flash[:error] = "亲，帐号或密码错误."
       redirect_to new_session_path
