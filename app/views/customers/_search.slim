@@ -1,0 +1,4 @@
+= form_tag count_area_customers_path, method: :post, id: 'customersInfo' do
+  = select_tag :province_id, options_for_select(provinces, @province_id), required: true
+  = select_tag :city_id, options_for_select(cities, @city_id), required: true
+  = submit_tag t('label_search')

@@ -2,6 +2,7 @@
 
 class Province < ActiveRecord::Base
 
-  has_many :cities # 客户
+  has_many :cities   
+  has_many :customers # 客户
 
 end

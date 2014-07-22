@@ -4,17 +4,22 @@ class CreateCustomers < ActiveRecord::Migration
       t.string     :name            # 姓名
       t.string     :email           # 邮箱
       t.string     :mobile          # 手机号码
+      t.string     :telephone       # 联系电话
       t.date       :birthday        # 生日
-      t.string     :career          # 职业
-      t.string     :market          # 市场
       t.string     :company         # 公司
+      t.string     :career          # 职位
+      t.string     :department      # 部门
+      t.string     :market          # 市场
       t.string     :scale           # 规模
       t.string     :address         # 地址
+      t.string     :qq              #　QQ
+      t.string     :weixin          # 微信
 
-      t.integer    :status          # 活跃(1) || 流失(-1) || 非活跃(0)
+      t.integer    :status          # 流失(0) || 非活跃(1) || 活跃(2)
       t.string     :comment         # 备注
 
       t.references :city            # 城市
+      t.references :province        # 省份
       t.references :user            # 用户
 
       t.integer    :publish_cars_count # 发车数量

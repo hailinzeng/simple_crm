@@ -1,0 +1,10 @@
+h3 = t("label_add_record")
+= form_for @communication, url: customer_communications_path(@customer) do |f|
+  div data-role="fieldcontain"
+    = f.label :name, Communication.human_attribute_name(:name)
+    = f.text_field :name, required: true
+    = f.label :channel, Communication.human_attribute_name(:channel)
+    = f.select :channel, options_for_select(t('communication.channel').invert), required: true
+    = f.label :comment, Communication.human_attribute_name(:comment)
+    = f.text_field :comment, required: true
+  = f.submit t("label_save"), "data-inline" => true

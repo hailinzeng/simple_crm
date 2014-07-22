@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
 
   attr_accessor :password, :password_confirmation
 
-  hash_key :cities    # { id => name }
-  hash_key :provinces # { id => name }
+  hash_key :cities    # { city_id => name }
+  hash_key :provinces # { province_id => name }
 
   has_many :customers
 
@@ -20,12 +20,23 @@ class User < ActiveRecord::Base
 
   scope :salesmen, -> { where('role < 4') }
 
+  def has_province?(province_id)
+    self.provinces.keys.include?(province_id)
+  end
+
+  def has_city?(city_id)
+    self.cities.keys.include?(city_id)
+  end
+
   def add_city!(city)
-    self.cities[city.id] = city.name
+    self.cities[city.city_id] = city.name
   end
 
   def add_province!(province)
-    self.provinces[province.id] = province.name
+    self.provinces[province.province_id] = province.name
+    province.cities.each do |city|
+      self.cities[city.city_id] = city.name
+    end
   end
 
   # 待重构

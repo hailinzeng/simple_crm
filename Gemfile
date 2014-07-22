@@ -15,7 +15,6 @@ gem 'jquery-rails'
 
 # 枚举
 gem 'enumerize'
-
 gem 'nestful'
 
 gem 'thin'

@@ -1,18 +1,19 @@
 Rails.application.routes.draw do
 
-  get '/home' => 'home#index'
+  get '/' => 'sessions#new'
   
   resources :sessions
 
-  resources :users do
-    resources :reset do
-      collection do
-        patch :password
-      end
-    end
+  resources :users do    
     collection do
       get :profile
       get :customers
+    end
+  end
+
+  resources :reset do
+    collection do
+      patch :password
     end
   end
 
@@ -20,7 +21,8 @@ Rails.application.routes.draw do
     collection do
       get  :capture_card
       post :card_analyze
-      post :search
+      get  :search
+      post :count_area
     end
     resources :communications
   end
@@ -30,6 +32,10 @@ Rails.application.routes.draw do
       get  :edit_city
       post :permission_assign
     end
+  end
+
+  resources :provinces do
+    resources :cities
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

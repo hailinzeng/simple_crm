@@ -1,7 +1,9 @@
-span = @city.region_chn + @city.name_chn
+= render 'customers/search'
+
 = link_to '', href=new_customer_path, class: 'ui-btn-right', 'data-role'=>'button', 'data-icon' => 'plus', 'data-inline' => true, 'data-iconpos' => 'notext'
 = render 'customers/profile'
-= render 'communications/list'
-div
-  = link_to t("label_more"), href=customer_communications_path(@customer), "data-role" => "button", "data-inline" => true
-= render 'communications/add_communication'
+- unless @customer.nil?
+  = render 'communications/list'
+  div
+    = link_to t("label_more"), href=customer_communications_path(@customer), "data-role" => "button", "data-inline" => true
+  = render 'communications/add'

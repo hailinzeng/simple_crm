@@ -11,14 +11,12 @@ class CommunicationsController < ApplicationController
 
   def create
     @communication = @customer.communications.new(communication_params)
-    result = if @communication.save
-               { success: true, msg: '添加成功.' }
-             else
-               { success: false, msg: @communication.errors.full_messages.first }
-             end
-    respond_to do |format|
-      format.json { render json: result }
+    if @communication.save
+      flash[:success] = '添加成功。'
+    else
+      flash[:error] = @communication.errors.full_messages.first
     end
+    redirect_to customer_path(@customer)
   end
 
   def index

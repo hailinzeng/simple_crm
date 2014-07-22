@@ -12,6 +12,7 @@ html
     div data-role="page" data-url = request.path
       div data-role="header"
         h1 CRM
+        a href="javascript:void(0)" data-role="button" data-rel="back" data-icon="back" = t('label_back')
       div data-role="content"
         = render 'share/flash_message'
         == yield

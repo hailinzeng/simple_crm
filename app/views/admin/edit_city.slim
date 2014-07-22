@@ -1,5 +1,5 @@
-= form_tag(add_cities_admin_index_path(saler_id: @saler.id)) do
+= form_tag(permission_assign_admin_index_path(saler_id: @saler.id)) do
   div data-role="fieldcontain"
     = select_tag :key, options_for_select(places), required: true
-    = text_field_tag :place, nil, placeholder: t('input_place_tip')
+    = text_field_tag :name, nil, placeholder: t('input_place_tip')
   = submit_tag t('label_confirm'), 'data-inline' => true

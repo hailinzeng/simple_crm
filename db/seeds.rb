@@ -1,6 +1,23 @@
 # encoding: UTF-8
 # 内置数据
 
+json_cities = File.open('db/cities.json').read
+data = JSON.parse(json_cities)
+data.each do |data|
+  province_id = data["id"]
+  province_name = data["name"]
+  cities = data["subs"]
+  province = Province.new(name: province_name, province_id: province_id)
+  province.save
+  cities.each do |city|
+    city_id = city["id"]
+    city_name = city["name"]
+    province.cities.create(name: city_name, city_id: city_id)
+  end
+end
+
+=begin
+
 provinces = [ '河北', '山西', '内蒙古自治区', '辽宁', '吉林', '黑龙江', '江苏', '浙江',
               '安徽', '福建', '江西', '山东', '河南', '湖北', '湖南', '广东', '广西壮族自治区',
               '海南', '四川', '贵州', '云南', '西藏自治区', '陕西', '甘肃', '青海',
@@ -200,3 +217,5 @@ names = [ '乌鲁木齐', '克拉玛依', '吐鲁番地区', '哈密地区', '�
 names.each do |name|
   xinjiang.cities.create(name: name)
 end
+
+=end

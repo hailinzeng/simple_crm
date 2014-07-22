@@ -1,25 +1,83 @@
 div data-role="controlgroup" data-type="vertical"
-  = link_to t("label_capture_card"), href=capture_card_customers_path, "data-role" => "button"
-  = link_to t("label_add_customer"), href="/", "data-role" => "button"
+  = link_to t("label_capture_card"), href='javascript:;', "data-role" => "button"
 
+h3 = t("label_add_customer")
 = form_for(@customer) do |f|
   div data-role="fieldcontain"
-    = f.label :city_id, t("customer.city")
-    = f.text_field :city_id, required: true
-    = f.label :mobile, t("customer.mobile")
+    = f.label :province_id, Customer.human_attribute_name('province')
+    = f.select :province_id, options_for_select(Province.pluck(:name, :id)), required: true
+    = f.label :city_id, Customer.human_attribute_name('city')
+    = f.select :city_id, options_for_select([])
+    = f.label :mobile, Customer.human_attribute_name('mobile')
     = f.text_field :mobile, required: true
-    = f.label :name, t("customer.name")
-    = f.text_field :name, required: true
-    = f.label :market, t("customer.market")
-    = f.text_field :market, required: true
-    = f.label :company, t("customer.company")
-    = f.text_field :company, required: true
-    = f.label :career, t("customer.career")
-    = f.text_field :career, required: true
-    = f.label :scale, t("customer.scale")
-    = f.text_field :scale, required: true
-    = f.label :address, t("customer.address")
-    = f.text_field :address, required: true
-    = f.label :comment, t("customer.comment")
-    = f.text_field :comment, required: true
+    = f.label :telephone, Customer.human_attribute_name('telephone')
+    = f.text_field :telephone
+    = f.label :name, Customer.human_attribute_name('name')
+    = f.text_field :name
+    = f.label :market, Customer.human_attribute_name('market')
+    = f.text_field :market
+    = f.label :company, Customer.human_attribute_name('company')
+    = f.text_field :company
+    = f.label :career, Customer.human_attribute_name('career')
+    = f.text_field :career
+    = f.label :department, Customer.human_attribute_name('department')
+    = f.text_field :department
+    = f.label :scale, Customer.human_attribute_name('scale')
+    = f.text_field :scale
+    = f.label :qq, Customer.human_attribute_name('qq')
+    = f.text_field :qq
+    = f.label :weixin, Customer.human_attribute_name('weixin')
+    = f.text_field :weixin
+    = f.label :address, Customer.human_attribute_name('address')
+    = f.text_field :address
+    = f.label :comment, Customer.human_attribute_name('comment')
+    = f.text_field :comment
   = f.submit t("label_save"), "data-inline" => true
+
+h3 = t('label_my_customers')
+- unless @customers.nil?
+  table data-role="table" id="movie-table" data-mode="reflow" class="ui-responsive table"
+    thead
+      tr
+        th = Customer.human_attribute_name("name")
+        th = Customer.human_attribute_name("mobile")
+        th = Customer.human_attribute_name('import_at')
+    tbody  
+      - @customers.each do |customer|
+        tr
+          td = link_to customer.name, href=search_customers_path(mobile: customer.mobile, name: customer.name)
+          td = link_to customer.mobile, href=search_customers_path(mobile: customer.mobile, name: customer.name)
+          td = format_datetime(customer.created_at)
+  ul class="pagination"
+      = paginate @customers
+
+javascript:
+  $('#customer_province_id').change(function(){
+    var currentEL = $(this);
+    var province_id = currentEL.val();
+    $.ajax({
+      url: '/provinces/' + province_id + '/cities',
+      type: 'GET',
+      success: function(resp){
+        var options='';
+        $.each(resp, function(i, value){
+          var name = value[1];
+          var text = value[0];
+          if(i == 0){
+            options += '<option value="'+ name +'" selected>' + text + '</option>';
+          }else{
+            options += '<option value="'+ name +'">' + text + '</option>';
+          }
+        });
+        $('#customer_city_id').empty().append(options);
+        // jquery mobile set select default value
+        var cityName;
+        if(resp.length > 0){
+          cityName = resp[0][0];
+        }else{
+          cityName = currentEL.siblings('span').text();
+        }
+        $('#customer_city_id').siblings('span').html(cityName);
+      }
+    });
+  });

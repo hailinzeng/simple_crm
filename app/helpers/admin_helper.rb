@@ -7,4 +7,8 @@ module AdminHelper
 		}
 	end
 
+  def saler_places(saler)
+    (saler.provinces.values + saler.cities.values).join(', ')
+  end
+
 end

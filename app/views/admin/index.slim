@@ -5,15 +5,16 @@ table data-role='table' id='movie-table' data-mode='reflow' class='ui-responsive
       th = User.human_attribute_name(:mobile)
       th = User.human_attribute_name(:role)
       th = User.human_attribute_name(:city)
-      th = User.human_attribute_name(:cities)
+      th = User.human_attribute_name(:place)
+      th = t('label_operation')
   tbody
-    - @users.each do |user|
+    - @salesmen.each do |saler|
       tr
-        td = user.name
-        td = user.mobile
-        td = User.roles.invert[user.role.intern]
-        td = user.city.name_chn
-        td = user.cities.values.join(', ')
-        td = link_to t("label_update"), href=edit_city_admin_index_path(saler_id: user.id), "data-role" => "button"
+        td = saler.name
+        td = saler.mobile
+        td = User.roles.invert[saler.role.intern]
+        td = saler.city.name
+        td = saler_places(saler)
+        td = link_to t("label_add"), href=edit_city_admin_index_path(saler_id: saler.id), "data-role" => "button", "data-inline" => true
 ul class='pagination'
-  = paginate @users
+  = paginate @salesmen

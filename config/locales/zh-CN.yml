@@ -136,30 +136,16 @@ zh-CN:
       prompt: "请选择"
 
   customer:
-    city: "城市"
-    mobile: "手机号码"
-    name: "姓名"
-    market: "市场"
-    company: "公司"
-    career: "职务"
-    scale: "规模"
-    address: "地址"
-    comment: "备注"
-    created_at: "注册时间"
-    last_login_at: "上次访问时间"
-    last_publish_at: "上次发车时间"
-    last_collect_at: "上次收车时间"
-    publish_cars_count: "发车数量"
-    collect_cars_count: "收车数量"
-    status_label: "用户状态"
     status:
       loss: "流失"
       active: "活跃"
       inactive: "非活跃"
   communication:
-    name: "姓名"
-    channel: "渠道"
-    comment: "备注"
+    channel:
+      sms: "短信"
+      push_in: "地推"
+      call_out: "外呼"
+      other: "其它"
 
   activerecord:
     attributes:
@@ -171,7 +157,34 @@ zh-CN:
         role: "角色"
         mobile: "手机号码"
         city: "所在地"
-        cities: "城市列表"
+        place: "地区"
+      customer:
+        province: "省份"
+        city: "城市"
+        mobile: "手机号码"
+        telephone: "联系电话"
+        name: "姓名"
+        market: "市场"
+        company: "公司"
+        career: "职务"
+        department: "部门"
+        scale: "规模"
+        address: "地址"
+        comment: "备注"
+        qq: "QQ"
+        weixin: "微信"
+        created_at: "注册时间"
+        import_at: "录入时间"
+        last_login_at: "上次访问时间"
+        last_publish_at: "上次发车时间"
+        last_collect_at: "上次收车时间"
+        publish_cars_count: "发车数量"
+        collect_cars_count: "收车数量"
+        status_label: "用户状态"
+      communication:
+        name: "姓名"
+        channel: "渠道"
+        comment: "备注"
     errors:
       template: # ~ 2.3.5 backward compatible
         header:
@@ -255,8 +268,12 @@ zh-CN:
   label_register: "注册"
   label_save: "保存"
   label_confirm: "确定"
+  label_add: "新增"
   label_update: "修改"
+  label_operation: "操作"
+  label_back: "返回"
   label_city: "城市"
+  label_home: "首页"
   label_customer_count: "总用户"
   label_loss_customer_count: "流失用户"
   label_active_customer_count: "活跃用户"
@@ -274,7 +291,10 @@ zh-CN:
   label_admin: "后台管理"
   label_place: "地点"
   label_my_location: '我的位置'
-
-  input_place_tip: "请输入省份或者城市，例如：杭州 或者 浙江"
   label_not_customer: '没有客户'
   label_current_user: '当前用户'
+
+  input_place_tip: "请输入省份或者城市，例如：杭州 或者 浙江"
+
+  without_permission_tip: "您没有查看权限"
+  user_not_exist: "该用户不存在"

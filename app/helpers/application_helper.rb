@@ -5,7 +5,7 @@ module ApplicationHelper
     percentage = if total <= 0
                    "0.00%"
                  else
-                   number_to_percentage((num / total.to_f) * 100)
+                   number_to_percentage((num / total.to_f) * 100, precision: 2)
                  end
     "占比: #{percentage}"
   end
@@ -40,6 +40,34 @@ module ApplicationHelper
         session[:user_id] = nil
       end
     end
+  end
+  
+  def has_prev_page?
+    current_page > 1
+  end
+
+  def current_page
+    params[:page].to_i == 0 ? 1 : params[:page].to_i
+  end
+
+  def prev_page
+    current_page - 1
+  end
+
+  def next_page
+    current_page + 1
+  end
+
+  def page_size
+    params[:per_page].to_i == 0 ? 10 : params[:per_page].to_i
+  end
+
+  def has_next_page?
+    current_page < total_pages
+  end
+
+  def total_pages
+    (@count / page_size) + 1
   end
 
 end

@@ -8,7 +8,7 @@ class ResetController < ApplicationController
     else
       flash[:error] = @current_user.errors.full_messages.first
     end
-    redirect_to user_reset_index_path
+    redirect_to reset_index_path
   end
 
   def index

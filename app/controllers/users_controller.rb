@@ -2,8 +2,7 @@
 
 class UsersController < ApplicationController
   include UsersHelper
-  before_filter :current_user,    only: [ :profile, :update, :customers ]
-  before_filter :find_permission, only: [ :profile, :customers ]
+  before_filter :current_user, only: [ :profile, :update, :customers ]
 
   def new
     @user = User.new
@@ -26,13 +25,14 @@ class UsersController < ApplicationController
   end
 
   def profile
-    customers = @current_user.customers_area(params[:province_id], params[:city_id])
-    if customers.any?
-      @customers_count = customers.count
-      @loss_customers_count = customers.having_status(:loss).count
-      @inactive_customers_count = customers.having_status(:inactive).count
-      @active_customers_count = customers.having_status(:active).count
-    end
+    @city_id = @current_user.cities.keys.first
+    @province_id = @current_user.provinces.keys.first
+    opts = { cityStdId: @city_id, provinceStdId: @province_id }
+    data = Customer.count_area_customers(opts)
+    @loss_customers_count = data['loss_count']
+    @inactive_customers_count = data['inactive_count']
+    @active_customers_count = data['active_count']
+    @customers_count = @loss_customers_count + @inactive_customers_count + @active_customers_count
   end
 
   def update
@@ -51,14 +51,7 @@ class UsersController < ApplicationController
   private
     def user_params
       params.require(:user).permit( :login, :password, :password_confirmation, 
-                                    :role, :name, :email, :mobile, :city_id )
-    end
-
-    def find_permission
-      default_province_id = @current_user.provinces.empty? ? '' : @current_user.provinces.first[0]
-      @province = Province.where(id: params[:province_id] || default_province_id).first
-      default_city_id = @current_user.cities.empty? ? '' : @current_user.cities.first[0]
-      @city = City.where(id: params[:city_id] || default_city_id).first
+                                    :role, :name, :email, :mobile )
     end
 
 end

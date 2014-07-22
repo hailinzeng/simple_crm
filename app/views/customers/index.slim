@@ -1,20 +1,26 @@
 = form_tag(customers_path, method: :get) do
-  = date_field_tag :start_at, (Date.today-1)
-  = date_field_tag :end_at, Date.today
+  = date_field_tag :start_at, start_at
+  = date_field_tag :end_at, end_at
   = submit_tag t("label_find"), "data-inline" => true, "data-icon" => "search", "data-inline" => true
 
-h2 总用户
+h2 = status_label
 table data-role="table" id="movie-table" data-mode="reflow" class="ui-responsive table"
   thead
     tr
-      th = t("customer.name")
-      th = t("customer.mobile")
-      th = t("customer.created_at")
+      th = Customer.human_attribute_name("name")
+      th = Customer.human_attribute_name("mobile")
+      th = Customer.human_attribute_name("created_at")
   tbody
     - @customers.each do |customer|
       tr
-        td = customer.name
-        td = customer.mobile
-        td = format_datetime(customer.created_at)
+        td = link_to customer['name'], href=search_customers_path(mobile: customer['phone'], name: customer['name'])
+        td = customer['phone']
+        td = customer['register_time']
 ul class="pagination"
-    = paginate @customers
+  nav class="pagination"
+    - if has_prev_page? 
+      span class="prev"
+        = link_to t('views.pagination.previous'), href=link_prev_page, 'rel' => 'prev', 'class' => 'ui-link'
+    - if has_next_page?
+      span class="next"
+        = link_to t('views.pagination.next'), href=link_next_page, 'rel' => 'next', 'class' => 'ui-link'

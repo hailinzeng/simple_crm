@@ -1,8 +1,7 @@
-= form_for @current_user, url: password_user_reset_index_path(@current_user), method: :patch do |f|
+= form_for @current_user, url: password_reset_index_path, method: :patch do |f|
   div data-role="fieldcontain"
-    = f.label :password, t("label_user_new_password") + ":"
+    = f.label :password, User.human_attribute_name(:password) + ":"
     = f.password_field :password
-    = f.label :password_confirmation, t("label_user_confirmation_password") + ":"
+    = f.label :password_confirmation, User.human_attribute_name(:password_confirmation) + ":"
     = f.password_field :password_confirmation
-
   = f.submit t("label_update"), "data-inline" => true

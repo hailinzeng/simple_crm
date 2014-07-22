@@ -15,13 +15,14 @@ ActiveRecord::Schema.define(version: 5) do
 
   create_table "cities", force: true do |t|
     t.string  "name"
+    t.integer "city_id"
     t.integer "province_id"
   end
 
   create_table "communications", force: true do |t|
     t.integer  "customer_id"
     t.string   "name"
-    t.string   "channel"
+    t.integer  "channel"
     t.string   "comment"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -32,15 +33,20 @@ ActiveRecord::Schema.define(version: 5) do
     t.string   "name"
     t.string   "email"
     t.string   "mobile"
+    t.string   "telephone"
     t.date     "birthday"
-    t.string   "career"
-    t.string   "market"
     t.string   "company"
+    t.string   "career"
+    t.string   "department"
+    t.string   "market"
     t.string   "scale"
     t.string   "address"
+    t.string   "qq"
+    t.string   "weixin"
     t.integer  "status"
     t.string   "comment"
     t.integer  "city_id"
+    t.integer  "province_id"
     t.integer  "user_id"
     t.integer  "publish_cars_count"
     t.integer  "collect_cars_count"
@@ -53,7 +59,8 @@ ActiveRecord::Schema.define(version: 5) do
   end
 
   create_table "provinces", force: true do |t|
-    t.string "name"
+    t.string  "name"
+    t.integer "province_id"
   end
 
   create_table "users", force: true do |t|

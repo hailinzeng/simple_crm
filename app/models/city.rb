@@ -7,8 +7,6 @@ class City < ActiveRecord::Base
 
   belongs_to :province
 
-  scope :cities_by_province, ->(province) { where(region_chn: province) }
-
   # 该城市的客户总数
   def customers_count
     self.customers.count

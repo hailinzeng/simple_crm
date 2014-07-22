@@ -73,6 +73,15 @@ h2, h3 {
   text-align: center;
 }
 
+caption {
+  text-align: center;
+  padding-top: 10px;
+}
+
 ul.pagination {
   text-align: center;
+}
+
+a {
+  text-decoration: none;
 }

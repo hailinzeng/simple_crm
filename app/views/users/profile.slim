@@ -1,8 +1,4 @@
-- unless @current_user.cities.all.empty?
-  = form_tag profile_users_path, method: :get, id: 'customersInfo' do
-    = select_tag :province_id, options_for_select(provinces, @city.id), required: true
-    = select_tag :city_id, options_for_select(cities, @city.id), required: true
-    = submit_tag t('label_search')
+= render 'customers/search'
 - if defined?(@customers_count)
   div class="ui-grid-c"
     div class="ui-block-a"
@@ -12,7 +8,7 @@
     div class="ui-block-c"
       span = percentage(@customers_count, @customers_count)
     div class="ui-block-d"
-      span = link_to t("label_detail"), href=customers_path
+      span = link_to t("label_detail"), href=customers_path(province_id: @province_id, city_id: @city_id)
     div class="ui-block-a"
       span = t("label_loss_customer_count")
     div class="ui-block-b"
@@ -20,7 +16,7 @@
     div class="ui-block-c"
       span = percentage(@loss_customers_count, @customers_count)
     div class="ui-block-d"
-      span = link_to t("label_detail"), href=customers_path(status: 'lost')
+      span = link_to t("label_detail"), href=customers_path(status: 0, province_id: @province_id, city_id: @city_id)
     div class="ui-block-a"
       span = t("label_active_customer_count")
     div class="ui-block-b"
@@ -28,7 +24,7 @@
     div class="ui-block-c"
       span = percentage(@active_customers_count, @customers_count)
     div class="ui-block-d"
-      span = link_to t("label_detail"), href=customers_path(status: 'active')
+      span = link_to t("label_detail"), href=customers_path(status: 1, province_id: @province_id, city_id: @city_id)
     div class="ui-block-a"
       span = t("label_inactive_customer_count")
     div class="ui-block-b"
@@ -36,21 +32,16 @@
     div class="ui-block-c"
       span = percentage(@inactive_customers_count, @customers_count)
     div class="ui-block-d"
-      span = link_to t("label_detail"), href=customers_path(status: 'inactive')
+      span = link_to t("label_detail"), href=customers_path(status: 2, province_id: @province_id, city_id: @city_id)
 - else
   div class="ui-grid-a"
     div class="ui-block-a"
       = t('label_not_customer')
 
-= form_tag(search_customers_path) do
+= form_tag(search_customers_path, method: :get) do
   div data-role="fieldcontain"
     = label_tag :mobile, User.human_attribute_name(:mobile) + ":"
     = text_field_tag :mobile
     = label_tag :name, User.human_attribute_name(:name) + ":"
     = text_field_tag :name
   = submit_tag t("label_search"), "data-icon" => "search", "data-inline" => true
-
-javascript:
-  $('#city_id').change(function(){
-    $('#customersInfo').submit();
-  });
