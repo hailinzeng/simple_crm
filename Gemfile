@@ -18,6 +18,7 @@ gem 'enumerize'
 gem 'nestful'
 
 gem 'thin'
+gem 'nokogiri'
 
 group :development, :test do
   gem 'binding_of_caller'
