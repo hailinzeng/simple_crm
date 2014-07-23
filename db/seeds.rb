@@ -16,6 +16,8 @@ data.each do |data|
   end
 end
 
+User.create(login: 'root', password: 'root@souche', password_confirmation: 'root@souche', mobile: '15968101221')
+
 =begin
 
 provinces = [ '河北', '山西', '内蒙古自治区', '辽宁', '吉林', '黑龙江', '江苏', '浙江',
