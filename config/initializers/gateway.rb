@@ -1,1 +1,1 @@
-GATEWAY_URL = 'http://118.192.93.31'
+GATEWAY_URL = 'http://niu.souche.com'
