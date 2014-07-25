@@ -1,4 +1,12 @@
-= form_tag count_area_customers_path, method: :post, id: 'customersInfo' do
-  = select_tag :province_id, options_for_select(provinces, @province_id), required: true
-  = select_tag :city_id, options_for_select(cities, @city_id), required: true
-  = submit_tag t('label_search')
+- if @current_user.role_root?
+  = form_tag count_area_customers_path, method: :post, id: 'customersInfo' do
+    = select_tag :province_id, options_for_select(provinces, @province_id), id: 'provinceId', required: true
+    = select_tag :city_id, options_for_select(cities(@province_id), @city_id), id: 'cityId'
+    = submit_tag t('label_search')
+- else
+  = form_tag count_area_customers_path, method: :post, id: 'customersInfo' do
+    = select_tag :province_id, options_for_select(provinces, @province_id), required: true
+    = select_tag :city_id, options_for_select(cities, @city_id), required: true
+    = submit_tag t('label_search')
+
+= javascript_include_tag 'province'

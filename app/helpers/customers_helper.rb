@@ -37,6 +37,8 @@ module CustomersHelper
                  }
                elsif @remote_customer.present?
                  {
+                   name: @remote_customer['name'],
+                   mobile: @remote_customer['mobile'],
                    status: Customer.status[@remote_customer['active_status'].to_i],
                    last_login_at: @remote_customer['last_active_time'],
                    last_publish_at: @remote_customer['last_publish_time'],

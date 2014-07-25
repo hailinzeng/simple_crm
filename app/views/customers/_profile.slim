@@ -5,6 +5,14 @@
 
   div class="ui-grid-a"
     div class="ui-block-a"
+      span = Customer.human_attribute_name(:name)
+    div class="ui-block-b"
+      span = customer[:name]
+    div class="ui-block-a"
+      span = Customer.human_attribute_name(:mobile)
+    div class="ui-block-b"
+      span = customer[:mobile]
+    div class="ui-block-a"
       span = Customer.human_attribute_name(:status_label)
     div class="ui-block-b"
       span = customer[:status]

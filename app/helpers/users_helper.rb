@@ -1,11 +1,21 @@
 module UsersHelper
 
 	def provinces
-		{'不限省份' => 'no'}.merge(@current_user.provinces.all.invert)
+    if @current_user.role_root?
+      [['不限省份', 'no']] + Province.labels
+    else
+      {'不限省份' => 'no'}.merge(@current_user.provinces.all.invert)
+    end
 	end
 
-	def cities
-		{'不限城市' => 'no'}.merge(@current_user.cities.all.invert)
+	def cities(province_id=nil)
+    if @current_user.role_root?
+      province = Province.where(province_id: province_id).first
+      return province.city_labels if province.present?
+      []
+    else
+      {'不限城市' => 'no'}.merge(@current_user.cities.all.invert)
+    end
 	end
 
 end

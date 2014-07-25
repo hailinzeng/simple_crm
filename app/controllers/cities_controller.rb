@@ -4,7 +4,7 @@ class CitiesController < ApplicationController
   before_filter :find_province
 
   def index
-    cities = @province.cities.pluck(:name, :id) unless @province.nil?
+    cities = @province.cities.pluck(:name, :city_id) unless @province.nil?
     respond_to do |format|
       format.json { render json: cities }
     end 
@@ -12,6 +12,6 @@ class CitiesController < ApplicationController
 
   private
     def find_province
-      @province = Province.where(id: params[:province_id]).first
+      @province = Province.where(province_id: params[:province_id]).first
     end
 end

@@ -29,10 +29,11 @@ class User < ActiveRecord::Base
   end
 
   def add_city!(city)
-    self.cities[city.city_id] = city.name
+    self.cities[city.city_id] = city.name if city.present?
   end
 
   def add_province!(province)
+    return unless province.present?
     self.provinces[province.province_id] = province.name
     province.cities.each do |city|
       self.cities[city.city_id] = city.name

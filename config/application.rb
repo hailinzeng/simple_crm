@@ -35,6 +35,6 @@ module SimpleCrm
     config.filter_parameters += [:password]
 
     config.active_record.timestamped_migrations = false
-    config.assets.precompile += %w( communications.js jquery.mobile-1.4.3.min.css jquery.min.js  jquery.mobile-1.4.3.min.js)
+    config.assets.precompile += %w( province.js jquery.mobile-1.4.3.min.css jquery.min.js  jquery.mobile-1.4.3.min.js)
   end
 end

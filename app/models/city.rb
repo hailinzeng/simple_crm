@@ -17,4 +17,8 @@ class City < ActiveRecord::Base
     self.salesmen.count
   end
 
+  def self.labels
+    City.pluck(:name, :city_id)
+  end
+
 end
