@@ -23,8 +23,9 @@ class UsersController < ApplicationController
 
   def profile
     @city_id = @current_user.cities.keys.first
-    if @city_id.nil? && !@current_user.role_root?
-      flash[:warning] = '您还没有任何权限。'
+    @province_id = @current_user.cities.keys.first
+    if @city_id.nil? && @province_id.nil? && !@current_user.role_root?
+      flash[:error] = '您还没有任何权限。'
     else
       opts = {}
       opts[:cityStdId] = @city_id unless @city_id.nil?
