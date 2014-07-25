@@ -3,7 +3,7 @@
   = date_field_tag :end_at, end_at
   = submit_tag t("label_find"), "data-inline" => true, "data-icon" => "search", "data-inline" => true
 
-h2 = status_label
+h2 = status_label + '(' + @count.to_s + ')'
 table data-role="table" id="movie-table" data-mode="reflow" class="ui-responsive table"
   thead
     tr

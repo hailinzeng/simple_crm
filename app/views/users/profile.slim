@@ -24,7 +24,7 @@
     div class="ui-block-c"
       span = percentage(@active_customers_count, @customers_count)
     div class="ui-block-d"
-      span = link_to t("label_detail"), href=customers_path(status: 1, province_id: @province_id, city_id: @city_id)
+      span = link_to t("label_detail"), href=customers_path(status: 2, province_id: @province_id, city_id: @city_id)
     div class="ui-block-a"
       span = t("label_inactive_customer_count")
     div class="ui-block-b"
@@ -32,7 +32,7 @@
     div class="ui-block-c"
       span = percentage(@inactive_customers_count, @customers_count)
     div class="ui-block-d"
-      span = link_to t("label_detail"), href=customers_path(status: 2, province_id: @province_id, city_id: @city_id)
+      span = link_to t("label_detail"), href=customers_path(status: 1, province_id: @province_id, city_id: @city_id)
 - else
   div class="ui-grid-a"
     div class="ui-block-a"
