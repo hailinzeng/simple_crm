@@ -76,13 +76,18 @@ class CustomersController < ApplicationController
   def count_area
     opts = {}
     opts[:provinceStdId] = @province_id unless @province_id.blank?
-    opts[:cityStdId] = @city_id unless @city_id.blank?
+    unless @city_id.blank?
+      opts[:cityStdId] = @city_id
+      city = City.where(city_id: @city_id).first
+      opts[:provinceStdId] = city.province.province_id
+    end
     data = Customer.count_area_customers(opts)
-
-        @loss_customers_count = data['loss_count']
-      @active_customers_count = data['active_count']
-    @inactive_customers_count = data['inactive_count']
-    @customers_count = @loss_customers_count + @inactive_customers_count + @active_customers_count
+    unless data.blank?
+          @loss_customers_count = data['loss_count']
+        @active_customers_count = data['active_count']
+      @inactive_customers_count = data['inactive_count']
+      @customers_count = @loss_customers_count + @inactive_customers_count + @active_customers_count
+    end
     render 'users/profile'
   end
 
