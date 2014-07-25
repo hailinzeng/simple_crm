@@ -10,9 +10,6 @@ class UsersController < ApplicationController
   end
 
   def create
-    # 临时处理用户输入城市取城市id，后面使用select2 传city_id 处理
-    city = City.where(name_chn: params[:user][:city]).first
-    params[:user][:city_id] = city.try(:id)
     @user = User.new user_params
     if @user.save
       set_current_user(@user)
@@ -27,12 +24,16 @@ class UsersController < ApplicationController
   def profile
     @city_id = @current_user.cities.keys.first
     @province_id = @current_user.provinces.keys.first
-    opts = { cityStdId: @city_id, provinceStdId: @province_id }
-    data = Customer.count_area_customers(opts)
-    @loss_customers_count = data['loss_count']
-    @inactive_customers_count = data['inactive_count']
-    @active_customers_count = data['active_count']
-    @customers_count = @loss_customers_count + @inactive_customers_count + @active_customers_count
+    if @city_id.nil? && @province_id.nil?
+      flash[:warning] = '您还没有任何权限。'
+    else
+      opts = { cityStdId: @city_id, provinceStdId: @province_id }
+      data = Customer.count_area_customers(opts)
+      @loss_customers_count = data['loss_count']
+      @inactive_customers_count = data['inactive_count']
+      @active_customers_count = data['active_count']
+      @customers_count = @loss_customers_count + @inactive_customers_count + @active_customers_count
+    end
   end
 
   def update
