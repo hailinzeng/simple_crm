@@ -16,7 +16,7 @@ data.each do |data|
   end
 end
 
-User.create(login: 'root', password: 'root@souche', root: 'root', password_confirmation: 'root@souche', mobile: '15968101221')
+User.create(login: 'root', password: 'root@souche', role: 'root', password_confirmation: 'root@souche', mobile: '15968101221')
 
 =begin
 
