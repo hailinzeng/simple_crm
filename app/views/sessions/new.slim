@@ -5,3 +5,4 @@
     = label_tag :password, User.human_attribute_name(:password) + ":"
     = password_field_tag :password
   = submit_tag t("label_login"), "data-inline" => true
+  = link_to t('label_register'), href=new_user_path
