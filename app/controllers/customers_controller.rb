@@ -81,6 +81,7 @@ class CustomersController < ApplicationController
       city = City.where(city_id: @city_id).first
       opts[:provinceStdId] = city.province.province_id
     end
+
     data = Customer.count_area_customers(opts)
     unless data.blank?
           @loss_customers_count = data['loss_count']
@@ -117,6 +118,7 @@ class CustomersController < ApplicationController
     end
 
     def get_remote_customers(opts)
+      opts.delete_if{|k, v| v.nil?}
       resp = Nestful.post "#{GATEWAY_URL}/crm/getUserActiveStatusList", opts rescue nil
       if resp.nil?
         flash[:error] = '服务器请求错误。'
