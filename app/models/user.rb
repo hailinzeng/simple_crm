@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
 
   belongs_to :city
 
+  belongs_to :role
+
   enumerize :role, in: { saler: 1, sale_leader: 2, sale_director: 3, developer: 4, root: 99 }, predicates: { prefix: true }, scope: true
 
   validates :login, uniqueness: true, length: { within: 3..16 }, presence: true
