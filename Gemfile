@@ -20,6 +20,8 @@ gem 'nestful'
 gem 'thin'
 gem 'nokogiri'
 
+gem 'nav_lynx'
+
 group :development, :test do
   gem 'binding_of_caller'
   gem 'rspec-rails'

@@ -1,22 +1,93 @@
 # encoding: UTF-8
 # 内置数据
 
-json_cities = File.open('db/cities.json').read
-data = JSON.parse(json_cities)
-data.each do |data|
-  province_id = data["id"]
-  province_name = data["name"]
-  cities = data["subs"]
-  province = Province.new(name: province_name, province_id: province_id)
-  province.save
-  cities.each do |city|
-    city_id = city["id"]
-    city_name = city["name"]
-    province.cities.create(name: city_name, city_id: city_id)
+def import_city
+  city = City.first
+  if city.nil?
+    json_cities = File.open('db/cities.json').read
+    data = JSON.parse(json_cities)
+    data.each do |data|
+      province_id = data["id"]
+      province_name = data["name"]
+      cities = data["subs"]
+      province = Province.new(name: province_name, province_id: province_id)
+      province.save
+      cities.each do |city|
+        city_id = city["id"]
+        city_name = city["name"]
+        province.cities.create(name: city_name, city_id: city_id)
+      end
+    end
   end
 end
 
-User.create(login: 'root', password: 'root@souche', role: 'root', password_confirmation: 'root@souche', mobile: '15968101221')
+def create_roles_and_menus
+  root = Menu.create(name: 'root')
+  customer = Menu.create( key: 'customer',
+                          name: '客户管理',
+                          url: '/customers/manage',
+                          parent: root )
+  new_customer  = Menu.create( key: 'new_customer',
+                               name: '添加客户',
+                               url: '/customers/new',
+                               parent: customer )
+  my_customers  = Menu.create( key: 'my_customers',
+                               name: '我的客户',
+                               url: '/profile/customers',
+                               parent: customer )
+  customer_list = Menu.create( key: 'index',
+                               name: '区域客户列表',
+                               url: '/customers',
+                               parent: customer )
+
+  info = Menu.create(key: 'info', name: '个人信息', url: '/profile', parent: root)
+  profile = Menu.create( key: 'profile',
+                         name: '个人主页',
+                         url: '/profile',
+                         parent: info )
+  pwd_reset = Menu.create( key: 'pwd_reset',
+                           name: '重置密码',
+                           url: '/reset',
+                           parent: info )
+
+  admin = Role.new(name: 'root', label: '总监', permission: { detail: true })
+  admin.menus = [ customer, new_customer, my_customers, customer_list,
+                  info, profile, pwd_reset ]
+  admin.save
+
+  area = Role.new(name: 'area', label: '大区经理', permission: { detail: true })
+  area.menus = [ customer, new_customer, my_customers, customer_list,
+                 info, profile, pwd_reset ]
+  area.save
+
+  province = Role.new(name: 'province', label: '区域主管', permission: { detail: true })
+  province.menus = [ customer, new_customer, my_customers, customer_list,
+                     info, profile, pwd_reset ]
+  province.save
+
+  city = Role.new(name: 'city', label: '服务顾问', permission: { detail: false })
+  city.menus = [ customer, new_customer, my_customers, info, profile, pwd_reset ]
+  city.save
+
+end
+
+def create_users
+  User.create( login: 'root',
+               mobile: '15968101221',
+               active: true,
+               role_id: 1,
+               password: 'root@souche',
+               password_confirmation: 'root@souche' )
+end
+
+def import_data
+  import_city
+  create_users
+  create_roles_and_menus
+end
+
+import_data
+
 
 =begin
 

@@ -1,20 +1,4 @@
-table data-role='table' id='movie-table' data-mode='reflow' class='ui-responsive table'
-  thead
-    tr
-      th = User.human_attribute_name(:name)
-      th = User.human_attribute_name(:mobile)
-      th = User.human_attribute_name(:role)
-      th = User.human_attribute_name(:city)
-      th = User.human_attribute_name(:place)
-      th = t('label_operation')
-  tbody
-    - @salesmen.each do |saler|
-      tr
-        td = saler.name
-        td = saler.mobile
-        td = User.roles.invert[saler.role.intern]
-        td = saler.city.try(:name)
-        td = saler_places(saler)
-        td = link_to t("label_add"), href=edit_city_admin_index_path(saler_id: saler.id), "data-role" => "button", "data-inline" => true
-ul class='pagination'
-  = paginate @salesmen
+ul data-role='listview'
+  li = link_to t('label_city_assign'), '/admin/city_assign'
+  li = link_to t('label_menu_assign'), '/admin/menu_assign'
+  li = link_to t('label_permission_assign'), '/admin/permission_assign'

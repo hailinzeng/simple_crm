@@ -5,7 +5,7 @@ class CustomersController < ApplicationController
 
   before_filter :current_user
   before_filter :find_customer,   only: [ :show, :update ]
-  before_filter :find_permission, only: [ :count_area ]
+  before_filter :find_permission, only: [ :index, :count_area ]
   before_filter :cache_data,      only: [ :index, :count_area ]
 
   def new
@@ -51,7 +51,7 @@ class CustomersController < ApplicationController
       @remote_customer = get_remote_customer
       if @remote_customer.nil?
         flash[:warning] = t('user_not_exist')
-        redirect_to profile_users_path
+        redirect_to profile_index_path
       else
         render 'show', layout: "session"
       end
@@ -89,7 +89,12 @@ class CustomersController < ApplicationController
       @inactive_customers_count = data['inactive_count']
       @customers_count = @loss_customers_count + @inactive_customers_count + @active_customers_count
     end
-    render 'users/profile'
+    render 'profile/index'
+  end
+
+  def manage
+      menu = Menu.where(key: 'customer').first
+    @menus = @current_user.role.menus.where(parent_id: menu.id) unless menu.nil?
   end
 
   # 拍摄名片
@@ -155,7 +160,7 @@ class CustomersController < ApplicationController
       unless find_country_permission?
         unless find_province_permission? || find_city_permission?
           flash[:error] = t('without_permission_tip')
-          redirect_to profile_users_path
+          redirect_to profile_index_path
         end
       end
     end
@@ -169,7 +174,7 @@ class CustomersController < ApplicationController
     end
 
     def find_country_permission?
-      unless @current_user.role_root?
+      unless @current_user.root?
         if (params[:province_id] == 'no' && params[:city_id] == 'no') || params[:province_id].blank? && params[:city_id].blank?
           flash[:error] = t('without_permission_tip')
           return false

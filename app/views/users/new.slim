@@ -6,8 +6,8 @@
     = f.password_field :password, required: true
     = f.label :password_confirmation, User.human_attribute_name(:password_confirmation) + ":"
     = f.password_field :password_confirmation, required: true
-    = f.label :role, User.human_attribute_name(:role) + ":"
-    = f.select :role, options_for_select(User.roles), required: true
+    = f.label :role_id, User.human_attribute_name(:role) + ":"
+    = f.select :role_id, options_for_select(Role.labels), required: true
     = f.label :name, User.human_attribute_name(:name) + ":"
     = f.text_field :name, required: true
 

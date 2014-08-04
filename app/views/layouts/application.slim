@@ -6,22 +6,23 @@ html
     meta name="author" content="Star"
     meta name="viewport" content="width=device-width, initial-scale=1"
     = stylesheet_link_tag 'jquery.mobile-1.4.3.min', 'application', media: 'all'
-    = javascript_include_tag 'jquery.min', 'jquery.mobile-1.4.3.min', 'application'
     = csrf_meta_tags
+    = javascript_include_tag 'jquery.min', 'jquery.mobile-1.4.3.min', 'application'
   body
     div data-role="page" data-url = request.path
       div data-role="header"
-        - if @current_user.role_root?
-          a href="/admin" data-role="button" data-icon="grid" = t('label_admin')
+        a href="javascript:void(0)" data-role="button" data-rel="back" data-icon="back" = t('label_back')
+        - if @current_user.root?
+          div#admin
+            a href="/admin" data-role="button" data-icon="grid" = t('label_admin')
         h1 CRM
         div class="ui-btn-right" data-role="controlgroup" data-type="horizontal"
           span = t('label_current_user') + ": " + @current_user.login
-          = link_to t('label_logout'), session_path(@current_user), method: :delete
-        div data-role="navbar"
-          ul
-            = render_navigation(level: 1..2, expand_all: true)
       div data-role="content"
         = render 'share/flash_message'
         == yield
-      div data-role="footer"
-        h1 大搜车
+      div data-role="footer" data-position="fixed"
+        div data-role="navbar"
+          ul#menu
+            - menus.each_with_index do |menu, index|
+              li = nav_link_to menu.name, menu.url, {}, { :selected_class => 'ui-btn-active ui-state-persist'}

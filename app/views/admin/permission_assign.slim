@@ -1,0 +1,9 @@
+ul data-role='listview' style='margin-top:10px'
+  = form_tag update_permission_admin_index_path, method: :patch do
+    - @roles.each_with_index do |role, index|
+      = label_tag role.label
+      - role.permission.each do |key, value|
+        = label_tag "#{key}#{index}", t("role.permission.#{key}")
+        = hidden_field_tag "permission[#{role.id}[#{key}]]", false
+        = check_box_tag "permission[#{role.id}[#{key}]]", to_bool(value), to_bool(value), { id: "#{key}#{index}" }
+    = submit_tag t('label_save')

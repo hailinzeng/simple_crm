@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 5) do
+ActiveRecord::Schema.define(version: 6) do
 
   create_table "cities", force: true do |t|
     t.string  "name"
@@ -58,9 +58,32 @@ ActiveRecord::Schema.define(version: 5) do
     t.datetime "updated_at"
   end
 
+  create_table "menus", force: true do |t|
+    t.string   "key"
+    t.string   "name"
+    t.string   "url"
+    t.text     "options"
+    t.integer  "parent_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "menus_roles", id: false, force: true do |t|
+    t.integer "role_id"
+    t.integer "menu_id"
+  end
+
   create_table "provinces", force: true do |t|
     t.string  "name"
     t.integer "province_id"
+  end
+
+  create_table "roles", force: true do |t|
+    t.string   "name"
+    t.string   "label"
+    t.text     "permission"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|
@@ -68,10 +91,10 @@ ActiveRecord::Schema.define(version: 5) do
     t.string   "name"
     t.string   "email"
     t.string   "mobile"
-    t.integer  "role"
     t.boolean  "active",           default: false
     t.string   "salt"
     t.string   "crypted_password"
+    t.integer  "role_id"
     t.integer  "city_id"
     t.datetime "created_at"
     t.datetime "updated_at"

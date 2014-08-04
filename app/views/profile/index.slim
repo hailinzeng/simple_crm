@@ -1,5 +1,6 @@
 = render 'customers/search'
 - if defined?(@customers_count)
+  - detail = @current_user.role.detail?
   div class="ui-grid-c"
     div class="ui-block-a"
       span = t("label_customer_count")
@@ -7,32 +8,36 @@
       span = @customers_count
     div class="ui-block-c"
       span = percentage(@customers_count, @customers_count)
-    div class="ui-block-d"
-      span = link_to t("label_detail"), href=customers_path(province_id: @province_id, city_id: @city_id)
+    - if detail
+      div class="ui-block-d"
+        span = link_to t("label_detail"), href=customers_path(province_id: @province_id, city_id: @city_id)
     div class="ui-block-a"
       span = t("label_loss_customer_count")
     div class="ui-block-b"
       span = @loss_customers_count
     div class="ui-block-c"
       span = percentage(@loss_customers_count, @customers_count)
-    div class="ui-block-d"
-      span = link_to t("label_detail"), href=customers_path(status: 0, province_id: @province_id, city_id: @city_id)
+    - if detail
+      div class="ui-block-d"
+        span = link_to t("label_detail"), href=customers_path(status: 0, province_id: @province_id, city_id: @city_id)
     div class="ui-block-a"
       span = t("label_active_customer_count")
     div class="ui-block-b"
       span = @active_customers_count
     div class="ui-block-c"
       span = percentage(@active_customers_count, @customers_count)
-    div class="ui-block-d"
-      span = link_to t("label_detail"), href=customers_path(status: 2, province_id: @province_id, city_id: @city_id)
+    - if detail
+      div class="ui-block-d"
+        span = link_to t("label_detail"), href=customers_path(status: 2, province_id: @province_id, city_id: @city_id)
     div class="ui-block-a"
       span = t("label_inactive_customer_count")
     div class="ui-block-b"
       span = @inactive_customers_count
     div class="ui-block-c"
       span = percentage(@inactive_customers_count, @customers_count)
-    div class="ui-block-d"
-      span = link_to t("label_detail"), href=customers_path(status: 1, province_id: @province_id, city_id: @city_id)
+    - if detail
+      div class="ui-block-d"
+        span = link_to t("label_detail"), href=customers_path(status: 1, province_id: @province_id, city_id: @city_id)
 - else
   div class="ui-grid-a"
     div class="ui-block-a"
@@ -45,3 +50,5 @@
     = label_tag :name, User.human_attribute_name(:name) + ":"
     = text_field_tag :name
   = submit_tag t("label_search"), "data-icon" => "search", "data-inline" => true
+
+= link_to t('label_logout'), session_path(@current_user), method: :delete, 'data-role' => 'button', style: 'background-color:red;color:white;'

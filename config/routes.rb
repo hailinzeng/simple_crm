@@ -4,9 +4,10 @@ Rails.application.routes.draw do
   
   resources :sessions
 
-  resources :users do    
+  resources :users
+
+  resources :profile do
     collection do
-      get :profile
       get :customers
     end
   end
@@ -23,19 +24,32 @@ Rails.application.routes.draw do
       post :card_analyze
       get  :search
       post :count_area
+      get  :manage
     end
     resources :communications
   end
 
   resources :admin do
     collection do
-      get  :edit_city
-      post :permission_assign
+      post  :add_city
+      get   :edit_city
+      get   :city_assign
+      get   :menu_assign
+      get   :permission_assign
+      patch :update_permission
     end
   end
 
   resources :provinces do
     resources :cities
+  end
+
+  resources :roles do
+    resources :menus do
+      collection do
+        patch :assign
+      end
+    end
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

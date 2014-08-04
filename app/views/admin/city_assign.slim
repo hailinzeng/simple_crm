@@ -1,0 +1,20 @@
+table data-role='table' id='movie-table' data-mode='reflow' class='ui-responsive table'
+  thead
+    tr
+      th = User.human_attribute_name(:name)
+      th = User.human_attribute_name(:mobile)
+      th = User.human_attribute_name(:role)
+      th = User.human_attribute_name(:city)
+      th = User.human_attribute_name(:place)
+      th = t('label_operation')
+  tbody
+    - @users.each do |user|
+      tr
+        td = user.name
+        td = user.mobile
+        td = user.role.label
+        td = user.city.try(:name)
+        td = saler_places(user)
+        td = link_to t("label_add"), href=edit_city_admin_index_path(user_id: user.id), "data-role" => "button", "data-inline" => true
+ul class='pagination'
+  = paginate @users

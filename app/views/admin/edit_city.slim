@@ -1,4 +1,4 @@
-= form_tag(permission_assign_admin_index_path(saler_id: @saler.id)) do
+= form_tag(add_city_admin_index_path(user_id: @user.id)) do
   div data-role="fieldcontain"
     = select_tag :key, options_for_select(places), required: true
     = text_field_tag :name, nil, placeholder: t('input_place_tip')

@@ -34,21 +34,4 @@ h3 = t("label_add_customer")
     = f.text_field :comment
   = f.submit t("label_save"), "data-inline" => true
 
-h3 = t('label_my_customers')
-- unless @customers.nil?
-  table data-role="table" id="movie-table" data-mode="reflow" class="ui-responsive table"
-    thead
-      tr
-        th = Customer.human_attribute_name("name")
-        th = Customer.human_attribute_name("mobile")
-        th = Customer.human_attribute_name('import_at')
-    tbody  
-      - @customers.each do |customer|
-        tr
-          td = link_to customer.name, href=search_customers_path(mobile: customer.mobile, name: customer.name)
-          td = link_to customer.mobile, href=search_customers_path(mobile: customer.mobile, name: customer.name)
-          td = format_datetime(customer.created_at)
-  ul class="pagination"
-      = paginate @customers
-
 = javascript_include_tag 'province'

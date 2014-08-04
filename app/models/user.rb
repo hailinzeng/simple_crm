@@ -16,11 +16,7 @@ class User < ActiveRecord::Base
 
   belongs_to :role
 
-  enumerize :role, in: { saler: 1, sale_leader: 2, sale_director: 3, developer: 4, root: 99 }, predicates: { prefix: true }, scope: true
-
   validates :login, uniqueness: true, length: { within: 3..16 }, presence: true
-
-  scope :salesmen, -> { where('role < 4') }
 
   def has_province?(province_id)
     self.provinces.keys.include?(province_id)
@@ -65,14 +61,8 @@ class User < ActiveRecord::Base
     return p.nil? ? [] : p.customers
   end
 
-  def self.roles
-    {
-        "销售员" => :saler,
-      "销售组长" => :sale_leader,
-      "销售总监" => :sale_director,
-      "开发人员" => :developer,
-         "root" => :root
-    }
+  def root?
+    self.role.name == 'root'
   end
 
   def self.find_with_login(login, password)

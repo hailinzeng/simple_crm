@@ -1,5 +1,22 @@
 module ApplicationHelper
 
+  def menus
+    role = @current_user.role
+    menus = role.parent_menus
+    return menus
+  end
+
+  def relation_to_a(menus)
+    menus.inject([]) do |result, menu|
+      hash = {
+        key: menu.key,
+        url: menu.url,
+       name: menu.name
+      }
+      result << hash
+    end
+  end
+
   # 百分比
   def percentage(num, total)
     percentage = if total <= 0
@@ -29,7 +46,7 @@ module ApplicationHelper
   end
 
   def admin?
-    @current_user.role_root?
+    @current_user.root?
   end
 
   def login_from_session
@@ -42,6 +59,8 @@ module ApplicationHelper
     end
   end
   
+  # 处理 kaminari 不带参数的问题
+  # 分页
   def has_prev_page?
     current_page > 1
   end

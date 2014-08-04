@@ -1,0 +1,10 @@
+= form_tag assign_role_menus_path(@role), method: :patch do
+  - @menus.each do |menu|
+    div.parentMenu
+      = label_tag menu.key, menu.name
+      = check_box_tag menu.key, menu.id, has_menu?(@role.id, menu.key), name: 'menu_ids[]'
+      - menu.children.each do |child|
+        div.childMenu
+          = label_tag child.key, child.name
+          = check_box_tag child.key, child.id, has_menu?(@role.id, child.key), name: 'menu_ids[]'
+  = submit_tag t('label_confirm')
