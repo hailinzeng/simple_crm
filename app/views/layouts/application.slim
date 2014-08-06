@@ -10,7 +10,7 @@ html
     = javascript_include_tag 'jquery.min', 'jquery.mobile-1.4.3.min', 'application'
   body
     div data-role="page" data-url = request.path
-      div data-role="header"
+      div data-role="header" data-theme="f"
         a href="javascript:void(0)" data-role="button" data-rel="back" data-icon="back" = t('label_back')
         - if @current_user.root?
           div#admin

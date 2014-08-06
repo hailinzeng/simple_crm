@@ -19,12 +19,11 @@ module ApplicationHelper
 
   # 百分比
   def percentage(num, total)
-    percentage = if total <= 0
-                   "0.00%"
-                 else
-                   number_to_percentage((num / total.to_f) * 100, precision: 2)
-                 end
-    "占比: #{percentage}"
+    if total <= 0
+      "0.00%"
+    else
+      number_to_percentage((num / total.to_f) * 100, precision: 2)
+    end
   end
 
   def format_datetime(time)

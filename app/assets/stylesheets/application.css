@@ -98,3 +98,13 @@ div#admin {
   margin-left: 90px;
   margin-top: -3px;
 }
+
+.ui-bar-f {
+  background-color: #fc7000;
+  border: 0px;
+  /*color: white;*/
+}
+
+.ui-body-f {
+  background-color: #fc7000;
+}

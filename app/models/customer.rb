@@ -8,6 +8,7 @@ class Customer < ActiveRecord::Base
   has_many :communications
 
   enumerize :status, in: { loss: 0, inactive: 1, active: 2 }, predicates: { prefix: true }, scope: :having_status
+  enumerize :market, in: {  }
 
   # validates :mobile, uniqueness: true, length: { is: 11 }, present: true
 
@@ -24,6 +25,12 @@ class Customer < ActiveRecord::Base
 
   def self.status
     { 0 => '流失用户', 1 => '非活跃用户', 2 => '活跃用户' }
+  end
+
+  def markets
+    {
+
+    }
   end
 
   def self.count_area_customers(opts)

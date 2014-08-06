@@ -1,4 +1,4 @@
-ul data-role='listview' style='margin-top:10px'
+ul data-role='listview' data-inset='true'
   = form_tag update_permission_admin_index_path, method: :patch do
     - @roles.each_with_index do |role, index|
       = label_tag role.label
