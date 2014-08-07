@@ -55,12 +55,12 @@ def create_roles_and_menus
                   info, profile, pwd_reset ]
   admin.save
 
-  area = Role.new(name: 'area', label: '大区经理', permission: { detail: true })
+  area = Role.new(name: 'area', label: '大区经理', permission: { detail: false })
   area.menus = [ customer, new_customer, my_customers, customer_list,
                  info, profile, pwd_reset ]
   area.save
 
-  province = Role.new(name: 'province', label: '区域主管', permission: { detail: true })
+  province = Role.new(name: 'province', label: '区域主管', permission: { detail: false })
   province.menus = [ customer, new_customer, my_customers, customer_list,
                      info, profile, pwd_reset ]
   province.save
@@ -69,6 +69,9 @@ def create_roles_and_menus
   city.menus = [ customer, new_customer, my_customers, info, profile, pwd_reset ]
   city.save
 
+  trainee = Role.new(name: 'trainee', label: '管培生', permission: { detail: false })
+  trainee.menus = [ customer, new_customer, my_customers, info, profile, pwd_reset ]
+  trainee.save
 end
 
 def create_users

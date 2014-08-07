@@ -39,4 +39,59 @@ module Import
       end
     end
   end
+
+  # 批量注册
+  class User
+    class << self
+      def parse(path)
+        data = CSV.parse(File.read(path))
+        data.delete_at(0)
+        data.delete_at(0)
+        data.each do |row|
+          user = ::User.create( parent_id: get_parent_id(row[1]),
+                                name: row[2],
+                                role_id: get_role_id(row[3]),
+                                mobile: row[4],
+                                status: ::User.status[row[5]],
+                                password: row[4],
+                                password_confirmation: row[4]
+                              )
+          if row[6].present?
+            province_names = row[6].split(',')
+            province_names.each do |p_name|
+              user.add_province!(::Province.where(name: p_name).first)
+            end
+          end
+
+          if row[7].present?
+            city_names = row[7].split(',')
+            city_names.each do |c_name|
+              user.add_city!(::City.where(name: c_name).first)
+            end
+          end
+        end
+      end
+
+      def get_parent_id(name)
+        ::User.where(name: name).first.try(:id) if name.present?
+      end
+
+      def get_role_id(name)
+        ::Role.where(label: name).first.try(:id)
+      end
+    end
+  end
+
+  # 导入市场
+  class Market
+    class << self
+      def parse(path)
+        data = CSV.parse(File.read(path))
+        data.delete_at(0)
+        data.each do |row|
+          ::Market.create(name: row[1], city: ::City.where(name: row[0]).first)
+        end
+      end
+    end
+  end
 end

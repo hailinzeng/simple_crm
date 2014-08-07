@@ -44,6 +44,8 @@ Rails.application.routes.draw do
     resources :cities
   end
 
+  get 'cities/:id/markets' => 'cities#markets'
+
   resources :roles do
     resources :menus do
       collection do

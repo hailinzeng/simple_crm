@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 6) do
+ActiveRecord::Schema.define(version: 7) do
 
   create_table "cities", force: true do |t|
     t.string  "name"
@@ -38,13 +38,14 @@ ActiveRecord::Schema.define(version: 6) do
     t.string   "company"
     t.string   "career"
     t.string   "department"
-    t.string   "market"
     t.string   "scale"
     t.string   "address"
     t.string   "qq"
     t.string   "weixin"
     t.integer  "status"
     t.string   "comment"
+    t.string   "market_name"
+    t.integer  "market_id"
     t.integer  "city_id"
     t.integer  "province_id"
     t.integer  "user_id"
@@ -54,6 +55,17 @@ ActiveRecord::Schema.define(version: 6) do
     t.datetime "last_publish_at"
     t.datetime "last_collect_at"
     t.datetime "import_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "markets", force: true do |t|
+    t.string   "name"
+    t.string   "address"
+    t.integer  "head_num"
+    t.integer  "hall_num"
+    t.integer  "car_dealer_num"
+    t.integer  "city_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -91,9 +103,11 @@ ActiveRecord::Schema.define(version: 6) do
     t.string   "name"
     t.string   "email"
     t.string   "mobile"
+    t.integer  "status"
     t.boolean  "active",           default: false
     t.string   "salt"
     t.string   "crypted_password"
+    t.integer  "parent_id"
     t.integer  "role_id"
     t.integer  "city_id"
     t.datetime "created_at"

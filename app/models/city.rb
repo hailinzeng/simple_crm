@@ -5,6 +5,8 @@ class City < ActiveRecord::Base
   has_many :customers # 客户
   has_many :salesmen, class_name: "User"
 
+  has_many :markets
+
   belongs_to :province
 
   # 该城市的客户总数

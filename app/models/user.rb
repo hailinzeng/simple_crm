@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
 
   belongs_to :role
 
-  validates :login, uniqueness: true, length: { within: 3..16 }, presence: true
+  # validates :login, uniqueness: true, length: { within: 3..16 }, presence: true
 
   def has_province?(province_id)
     self.provinces.keys.include?(province_id)
@@ -68,12 +68,19 @@ class User < ActiveRecord::Base
   def self.find_with_login(login, password)
     return nil unless (login.present? && password.present?)
     # 查询用户
-    user = User.where(login: login).first
+    user = User.where('login = ? or name = ? or mobile = ?', [ login, login, login ]).first
     # 判断权限
     if user && user.password_clean == password
       return user
     end
     nil
+  end
+
+  def self.status
+    {
+      '待转正' => 0,
+      '正式员工' => 1
+    }
   end
 
 end
