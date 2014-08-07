@@ -68,7 +68,7 @@ class User < ActiveRecord::Base
   def self.find_with_login(login, password)
     return nil unless (login.present? && password.present?)
     # 查询用户
-    user = User.where('login = ? or name = ? or mobile = ?', [ login, login, login ]).first
+    user = User.where( 'login = ? or name = ? or mobile = ?', login, login, login ).first
     # 判断权限
     if user && user.password_clean == password
       return user
