@@ -43,7 +43,7 @@ module Import
   # 批量注册
   class User
     class << self
-      def parse(path)
+      def parse(path = "#{Rails.root}/db/users.csv")
         data = CSV.parse(File.read(path))
         data.delete_at(0)
         data.delete_at(0)
@@ -85,7 +85,7 @@ module Import
   # 导入市场
   class Market
     class << self
-      def parse(path)
+      def parse(path = "#{Rails.root}/db/markets.csv")
         data = CSV.parse(File.read(path))
         data.delete_at(0)
         data.each do |row|
