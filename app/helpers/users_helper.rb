@@ -11,7 +11,7 @@ module UsersHelper
 	def cities(province_id=nil)
     if @current_user.root?
       province = Province.where(province_id: province_id).first
-      return province.city_labels if province.present?
+      return [['不限城市', 'no']] + province.city_labels if province.present?
       []
     else
       {'不限城市' => 'no'}.merge(@current_user.cities.all.invert)
