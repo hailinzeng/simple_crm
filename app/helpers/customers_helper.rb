@@ -1,5 +1,10 @@
 module CustomersHelper
 
+  def default_province
+    return @current_user.provinces.first[0] unless @current_user.provinces.empty?
+    Province.labels.first[1]
+  end
+
   def start_at
     if @start_at.nil?
       Date.today - 1
