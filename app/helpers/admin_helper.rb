@@ -7,8 +7,10 @@ module AdminHelper
 		}
 	end
 
+  # 目前地推人员负责区域精确到省
   def saler_places(saler)
-    (saler.provinces.values + saler.cities.values).join(', ')
+    return '全国' if saler.root?
+    saler.provinces.values.join(', ')
   end
 
   def has_menu?(role_id, key)
