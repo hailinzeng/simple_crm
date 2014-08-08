@@ -23,6 +23,17 @@ end
 
 def create_roles_and_menus
   root = Menu.create(name: 'root')
+
+  info = Menu.create(key: 'info', name: '个人主页', url: '/profile', parent: root)
+  profile = Menu.create( key: 'profile',
+                         name: '个人主页',
+                         url: '/profile',
+                         parent: info )
+  pwd_reset = Menu.create( key: 'pwd_reset',
+                           name: '重置密码',
+                           url: '/reset',
+                           parent: info )
+
   customer = Menu.create( key: 'customer',
                           name: '客户管理',
                           url: '/customers/manage',
@@ -39,16 +50,7 @@ def create_roles_and_menus
                                name: '区域客户列表',
                                url: '/customers',
                                parent: customer )
-
-  info = Menu.create(key: 'info', name: '个人信息', url: '/profile', parent: root)
-  profile = Menu.create( key: 'profile',
-                         name: '个人主页',
-                         url: '/profile',
-                         parent: info )
-  pwd_reset = Menu.create( key: 'pwd_reset',
-                           name: '重置密码',
-                           url: '/reset',
-                           parent: info )
+  
 
   admin = Role.new(name: 'root', label: '总监', permission: { detail: true })
   admin.menus = [ customer, new_customer, my_customers, customer_list,
