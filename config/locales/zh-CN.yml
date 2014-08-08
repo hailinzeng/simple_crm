@@ -281,6 +281,7 @@ zh-CN:
   label_loss_customer_count: "流失用户"
   label_active_customer_count: "活跃用户"
   label_inactive_customer_count: "非活跃用户"
+  label_pending_audit: "待审核用户"
   label_detail: "查看明细"
   label_search: "搜索"
   label_find: "查询"
@@ -299,6 +300,7 @@ zh-CN:
   label_city_assign: '分配城市'
   label_menu_assign: '分配菜单'
   label_permission_assign: '分配权限'
+  label_update_password: '修改密码'
 
   input_place_tip: "请输入省份或者城市，例如：杭州 或者 浙江"
 

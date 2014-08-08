@@ -51,4 +51,5 @@
     = text_field_tag :name
   = submit_tag t("label_search"), "data-icon" => "search", "data-inline" => true
 
+= link_to t('label_update_password'), reset_index_path
 = link_to t('label_logout'), session_path(@current_user), method: :delete, 'data-role' => 'button', style: 'background-color:red;color:white;'
