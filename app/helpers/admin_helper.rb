@@ -19,7 +19,7 @@ module AdminHelper
   end
 
   def to_bool(str)
-    str == "true" ? true : false
+    str.to_s == "true" ? true : false
   end
 
 end
