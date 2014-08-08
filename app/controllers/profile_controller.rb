@@ -11,7 +11,7 @@ class ProfileController < ApplicationController
       # 
     else
       if @city_id.nil? && @province_id.nil?
-        flash[:error] = '您还没有任何权限。'
+        # flash[:error] = '您还没有任何权限。'
       else
         opts = {}
         opts[:cityStdId] = @city_id if @city_id.present?
