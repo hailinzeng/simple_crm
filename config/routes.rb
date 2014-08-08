@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
 
-  get '/' => 'sessions#new'
+  root 'sessions#new'
   
   resources :sessions
 
-  resources :users
+  resources :users do
+    collection do
+      get :search
+    end
+  end
 
   resources :profile do
     collection do

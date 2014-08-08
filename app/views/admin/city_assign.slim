@@ -1,5 +1,11 @@
 h3 仅显示省级地区，城市不予显示
 h3 （直辖市作为省处理）
+
+= form_tag search_users_path, method: :get do
+  = label_tag :name, User.human_attribute_name(:name) + ":"
+  = text_field_tag :name, @name
+= submit_tag t("label_find"), "data-icon" => "search", "data-inline" => true
+
 table data-role='table' id='movie-table' data-mode='reflow' class='ui-responsive table'
   thead
     tr
