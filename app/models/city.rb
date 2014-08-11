@@ -23,4 +23,8 @@ class City < ActiveRecord::Base
     City.pluck(:name, :city_id)
   end
 
+  def market_labels
+    self.markets.pluck(:name, :id)
+  end
+
 end

@@ -34,8 +34,10 @@ class Customer < ActiveRecord::Base
   end
 
   def market=(market)
-      self.market_id = market.id
-    self.market_name = market.name
+    unless market.nil?
+        self.market_id = market.id
+      self.market_name = market.name
+    end
   end
 
 end

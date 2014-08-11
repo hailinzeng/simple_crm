@@ -37,6 +37,12 @@ module CustomersHelper
     end
   end
 
+  def market_names(customer)
+    city = City.where(city_id: customer.city_id).first
+    return [] if city.nil?
+    city.market_labels
+  end
+
   def customer
     customer = if @customer.present?
                  status = @customer.status.nil? ? nil : t("customer.status.#{@customer.status}")

@@ -41,7 +41,7 @@
     = form_for @customer, method: :patch do |f|
       div data-role="fieldcontain"
         = f.label :market, Customer.human_attribute_name(:market) + ":"
-        = f.text_field :market
+        = f.select :market_id, options_for_select(market_names(f.object), f.object.market_name), {}, id: 'marketId'
         = f.label :company, Customer.human_attribute_name(:company) + ":"
         = f.text_field :company
         = f.label :career, Customer.human_attribute_name(:career) + ":"

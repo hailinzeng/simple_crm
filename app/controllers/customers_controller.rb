@@ -15,7 +15,9 @@ class CustomersController < ApplicationController
 
   def create
     resp = Nestful.post "#{GATEWAY_URL}/crm/getOneUserActiveData", { mobile: params[:customer][:mobile] } rescue nil
-    @customer = @current_user.customers.new(customer_params)
+    market = Market.where(id: params[:customer][:market_id]).first
+    @customer = @current_user.customers.new(customer_params.merge!(market: market))
+
     if resp.nil?
       flash[:warning] = '该用户没有注册大搜车'
       render 'new'
