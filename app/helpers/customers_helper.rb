@@ -21,6 +21,14 @@ module CustomersHelper
     end
   end
 
+  def province_labels
+    if @current_user.root?
+      Province.labels
+    else
+      @current_user.provinces.all.invert
+    end
+  end
+
   def status_label
     if params[:status].present?
       Customer.status[params[:status].to_i]
