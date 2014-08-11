@@ -41,6 +41,9 @@ class CustomersController < ApplicationController
   end
 
   def show
+    params[:name] = @customer.name
+    params[:mobile] = @customer.mobile
+    @remote_customer = get_remote_customer
     @communications = @customer.communications.page(params[:page]).per(5)
     @communication = @customer.communications.new
     render layout: "session"
