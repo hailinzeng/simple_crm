@@ -85,10 +85,17 @@ def create_users
                password_confirmation: 'root@souche' )
 end
 
+def create_other_market
+  City.all.each do |c|
+    c.markets.create( name: '其他' )
+  end
+end
+
 def import_data
   import_city
   create_users
   create_roles_and_menus
+  create_other_market
 end
 
 import_data
