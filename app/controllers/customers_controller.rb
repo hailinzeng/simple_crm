@@ -19,11 +19,11 @@ class CustomersController < ApplicationController
     @customer = @current_user.customers.new(customer_params.merge!(market: market))
 
     if resp.nil?
-      flash[:warning] = '该用户没有注册大搜车'
+      flash[:warning] = '该用户没有注册车牛.'
       render 'new'
     else
       if @customer.save
-        flash[:success] = '客户已添加'
+        flash[:success] = '客户已添加.'
       else
         flash[:error] = @customer.errors.full_messages
       end
@@ -32,7 +32,8 @@ class CustomersController < ApplicationController
   end
 
   def update
-    if @customer.update(customer_params)
+    market = Market.where(id: params[:customer][:market_id]).first
+    if @customer.update(customer_params.merge!(market: market))
       flash[:success] = '已保存'
     else
       flash[:error] = @customer.errors.full_messages
@@ -120,9 +121,9 @@ class CustomersController < ApplicationController
     end
 
     def get_remote_customer
-      opts = {}
+        opts = {}
+        opts[:name] = params[:name]   if params[:name].present?
       opts[:mobile] = params[:mobile] if params[:mobile].present?
-      opts[:name] = params[:name] if params[:name].present?
       resp = Nestful.post "#{GATEWAY_URL}/crm/getOneUserActiveData", opts rescue nil
       return JSON.parse(resp.body)['data'] unless resp.nil?
     end

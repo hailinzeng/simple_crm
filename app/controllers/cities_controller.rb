@@ -7,7 +7,7 @@ class CitiesController < ApplicationController
   def index
     cities = @province.cities.pluck(:name, :city_id) unless @province.nil?
     respond_to do |format|
-      format.json { render json: cities }
+      format.json { render json: [['不限城市', 'no']] + cities }
     end
   end
 
