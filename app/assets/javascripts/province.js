@@ -53,6 +53,9 @@
   };
 
   getMarkets = function(cityId){
+    if(cityId == 'no' || cityId == undefined){
+      return;
+    }
     $.ajax({
       url: '/cities/' + cityId + '/markets',
       type: 'GET',
