@@ -53,34 +53,33 @@
   };
 
   getMarkets = function(cityId){
-    if(cityId == 'no' || cityId == undefined){
-      return;
-    }
-    $.ajax({
-      url: '/cities/' + cityId + '/markets',
-      type: 'GET',
-      success: function(resp){
-        var options='';
-        $.each(resp, function(i, value){
-          var name = value[1];
-          var text = value[0];
-          if(i == 0){
-            options += '<option value="'+ name +'" selected>' + text + '</option>';
+    if(cityId != 'no' && cityId != undefined){
+      $.ajax({
+        url: '/cities/' + cityId + '/markets',
+        type: 'GET',
+        success: function(resp){
+          var options='';
+          $.each(resp, function(i, value){
+            var name = value[1];
+            var text = value[0];
+            if(i == 0){
+              options += '<option value="'+ name +'" selected>' + text + '</option>';
+            }else{
+              options += '<option value="'+ name +'">' + text + '</option>';
+            }
+          });
+          
+          $('#marketId').empty().append(options);
+          var marketName;
+          if(resp.length > 0){
+            marketName = resp[0][0];
           }else{
-            options += '<option value="'+ name +'">' + text + '</option>';
+            marketName = '&nbsp;';
           }
-        });
-        
-        $('#marketId').empty().append(options);
-        var marketName;
-        if(resp.length > 0){
-          marketName = resp[0][0];
-        }else{
-          marketName = '&nbsp;';
+          $('#marketId').siblings('span').html(marketName);
         }
-        $('#marketId').siblings('span').html(marketName);
-      }
-    });
+      });
+    }
   };
 
   initProvince();
