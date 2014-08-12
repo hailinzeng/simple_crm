@@ -10,7 +10,7 @@ class Province < ActiveRecord::Base
   end
 
   def city_labels
-    self.cities.pluck(:name, :city_id)
+    [['不限城市', 'no']] + self.cities.pluck(:name, :city_id)
   end
 
 end

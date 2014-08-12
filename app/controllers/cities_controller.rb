@@ -5,9 +5,9 @@ class CitiesController < ApplicationController
   before_filter :find_city,  only: [ :markets ]
 
   def index
-    cities = @province.cities.pluck(:name, :city_id) unless @province.nil?
+    cities = @province.city_labels unless @province.nil?
     respond_to do |format|
-      format.json { render json: [['不限城市', 'no']] + cities }
+      format.json { render json: cities }
     end
   end
 
