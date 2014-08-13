@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-require 'util'
 
 class Role < ActiveRecord::Base
   serialize :permission
@@ -13,7 +12,7 @@ class Role < ActiveRecord::Base
   end
 
   def detail?
-    self.permission[:detail]
+    self.permission[:detail].to_s == 'true'
   end
 
   def self.labels
