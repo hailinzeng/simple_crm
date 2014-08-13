@@ -3,7 +3,9 @@ class CreateCities < ActiveRecord::Migration
     create_table :cities do |t|
       t.string         :name        # 城市中文名称
       t.integer        :city_id
-      t.references     :province
+      t.belongs_to     :province
     end
+
+    add_index :cities, :province_id
   end
 end

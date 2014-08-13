@@ -6,7 +6,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string   :email       # 邮箱
       t.string   :mobile      # 手机号码
       t.integer  :status      # 0：待转正；1：正式员工
-      t.boolean  :active, default: false  # 用户是否激活
+      t.boolean  :active,     # 用户是否激活
 
       t.string   :salt
       t.string   :crypted_password
