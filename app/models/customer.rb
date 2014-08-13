@@ -14,8 +14,11 @@ class Customer < ActiveRecord::Base
   scope :between_date, ->(start_at, end_at) { where('created_at >= ? and created_at <= ?',
                                                      start_at.to_date.beginning_of_day,
                                                      end_at.to_date.end_of_day) }
-  scope :search_by, ->(name, mobile) { where('name = ? or mobile = ?', name, mobile) }
 
+  scope :search_by, ->(name, mobile) do
+    self.where(name: name) if name.present?
+    self.where(mobile: mobile) if mobile.present?
+  end
   before_create :mark_import_at
   def mark_import_at
     self.import_at = Time.now

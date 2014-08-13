@@ -4,7 +4,7 @@ class CustomersController < ApplicationController
   include CustomersHelper
 
   before_filter :current_user
-  before_filter :find_customer,   only: [ :show, :update ]
+  before_filter :find_customer,   only: [ :show,  :update ]
   before_filter :find_permission, only: [ :index, :count_area ]
   before_filter :cache_data,      only: [ :index, :count_area ]
 
@@ -52,17 +52,17 @@ class CustomersController < ApplicationController
 
   def search
     @customer = Customer.search_by(params[:name], params[:mobile]).first
+    @remote_customer = get_remote_customer
     # 如果本地没有该客户，则实时获取，否则取本地数据库
-    if @customer.nil?
-      @remote_customer = get_remote_customer
-      if @remote_customer.nil?
-        flash[:warning] = t('user_not_exist')
-        redirect_to profile_index_path
+    if @customer.nil? && @remote_customer.nil?
+      flash[:warning] = t('user_not_exist')
+      redirect_to profile_index_path
+    else
+      if @remote_customer.nil? # 本地存在该客户时可查看增加沟通记录
+        redirect_to customer_path(@customer)
       else
         render 'show', layout: "session"
       end
-    else # 本地存在该客户时可查看增加沟通记录
-      redirect_to customer_path(@customer)
     end
   end
 
@@ -89,27 +89,25 @@ class CustomersController < ApplicationController
     end
 
     data = Customer.count_area_customers(opts)
-    unless data.blank?
-          @loss_customers_count = data['loss_count']
-        @active_customers_count = data['active_count']
-      @inactive_customers_count = data['inactive_count']
-      @customers_count = @loss_customers_count + @inactive_customers_count + @active_customers_count
+    result = if data.blank?
+               {}
+             else
+               {
+                 detail: @current_user.role.detail?,
+                 loss_customers_count: data['loss_count'],
+                 active_customers_count: data['active_count'],
+                 inactive_customers_count: data['inactive_count'],
+                 customers_count: data['loss_count'] + data['active_count'] + data['inactive_count']
+               }
+             end
+    respond_to do |format|
+      format.json { render json: result }
     end
-    render 'profile/index'
   end
 
   def manage
       menu = Menu.where(key: 'customer').first
     @menus = @current_user.role.menus.where(parent_id: menu.id) unless menu.nil?
-  end
-
-  # 拍摄名片
-  def capture_card
-    render layout: nil
-  end
-
-  def card_analyze
-    #resp = Camcard::Analyzer.parse(params[:upfile])
   end
 
   private
@@ -129,7 +127,7 @@ class CustomersController < ApplicationController
     end
 
     def get_remote_customers(opts)
-      opts.delete_if{|k, v| v.nil?}
+      opts.delete_if{|k, v| v.blank?}
       resp = Nestful.post "#{GATEWAY_URL}/crm/getUserActiveStatusList", opts rescue nil
       if resp.nil?
         flash[:error] = '服务器请求错误。'
