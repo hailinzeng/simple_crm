@@ -13,6 +13,22 @@ class ApplicationController < ActionController::Base
 
   protected
 
+    def require_user
+      if request.xhr?
+        unless current_user
+          result = {
+            :success => false,
+            :msg     => '请先登录帐号'
+          }
+          respond_to do |format|
+            format.json { render :json => result }
+          end
+        end
+      else
+        redirect_to new_session_path
+      end
+    end
+
     def logout
       session.delete(:user_id)
       @current_user = nil
