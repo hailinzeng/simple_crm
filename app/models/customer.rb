@@ -8,7 +8,7 @@ class Customer < ActiveRecord::Base
   has_many :communications
 
   enumerize :status, in: { loss: 0, inactive: 1, active: 2 }, predicates: { prefix: true }, scope: :having_status
-  validates :mobile, uniqueness: true, length: { is: 11 }, present: true
+  validates :mobile, uniqueness: true, length: { is: 11 }, presence: true
 
   scope :in_city, ->(city_id) { where(city_id: city_id) }
   scope :between_date, ->(start_at, end_at) { where('created_at >= ? and created_at <= ?',
