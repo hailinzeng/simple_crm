@@ -89,7 +89,10 @@ module Import
         data = CSV.parse(File.read(path))
         data.delete_at(0)
         data.each do |row|
-          ::Market.create(name: row[1], city: ::City.where(name: row[0]).first)
+          market = ::Market.where(name: row[1]).first
+          if market.nil?
+            ::Market.create(name: row[1], city: ::City.where(name: row[0]).first)
+          end
         end
       end
     end
