@@ -10,7 +10,6 @@ class CustomersController < ApplicationController
 
   def new
     @customer = Customer.new
-    @customers = @current_user.customers.page(params[:page]).per(params[:per_page])
   end
 
   def create
@@ -58,7 +57,7 @@ class CustomersController < ApplicationController
       flash[:warning] = t('user_not_exist')
       redirect_to profile_index_path
     else
-      if @remote_customer.nil? # 本地存在该客户时可查看增加沟通记录
+      if @customer.present? # 本地存在该客户时可查看增加沟通记录
         redirect_to customer_path(@customer)
       else
         render 'show', layout: "session"
