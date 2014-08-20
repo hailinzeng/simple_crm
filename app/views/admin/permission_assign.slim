@@ -1,5 +1,5 @@
 ul data-role='listview' data-inset='true'
-  = form_tag update_permission_admin_index_path, method: :patch do
+  = form_tag update_permission_admin_index_path, id: 'permissionForm', method: :patch do
     - @roles.each_with_index do |role, index|
       = label_tag role.label
       - role.permission.each do |key, value|
@@ -7,3 +7,14 @@ ul data-role='listview' data-inset='true'
         = hidden_field_tag "permission[#{role.id}[#{key}]]", false
         = check_box_tag "permission[#{role.id}[#{key}]]", to_bool(value), to_bool(value), { id: "#{key}#{index}" }
     = submit_tag t('label_save')
+
+javascript:
+  $('#permissionForm').find('label').click(function(){
+    var $checkbox = $(this).siblings(':checkbox');
+    var status = $checkbox.val();
+    if( status == 'true' ) {
+      $checkbox.val(false);
+    }else{
+      $checkbox.val(true);
+    }
+  });
