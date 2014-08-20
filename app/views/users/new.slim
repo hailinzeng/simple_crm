@@ -10,5 +10,7 @@
     = f.select :role_id, options_for_select(Role.labels), required: true
     = f.label :name, User.human_attribute_name(:name) + ":"
     = f.text_field :name, required: true
+    = f.label :mobile, User.human_attribute_name(:mobile) + ":"
+    = f.text_field :mobile, required: true
 
   = f.submit t("label_register"), "data-inline" => true
