@@ -88,20 +88,28 @@ class CustomersController < ApplicationController
     end
 
     data = Customer.count_area_customers(opts)
-    result = if data.blank?
-               {}
-             else
-               {
-                 detail: @current_user.role.detail?,
-                 loss_customers_count: data['loss_count'],
-                 active_customers_count: data['active_count'],
-                 inactive_customers_count: data['inactive_count'],
-                 customers_count: data['loss_count'] + data['active_count'] + data['inactive_count']
-               }
-             end
-    respond_to do |format|
-      format.json { render json: result }
+    # result = if data.blank?
+    #            {}
+    #          else
+    #            {
+    #              detail: @current_user.role.detail?,
+    #              loss_customers_count: data['loss_count'],
+    #              active_customers_count: data['active_count'],
+    #              inactive_customers_count: data['inactive_count'],
+    #              customers_count: data['loss_count'] + data['active_count'] + data['inactive_count']
+    #            }
+    #          end
+    # respond_to do |format|
+    #   format.json { render json: result }
+    # end
+
+    unless data.blank?
+      @loss_customers_count = data['loss_count']        
+      @active_customers_count = data['active_count']    
+      @inactive_customers_count = data['inactive_count']
+      @customers_count = @loss_customers_count + @inactive_customers_count + @active_customers_count
     end
+    render 'profile/index'
   end
 
   def manage
