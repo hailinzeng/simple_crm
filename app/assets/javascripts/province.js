@@ -60,7 +60,7 @@
         url: '/cities/' + cityId + '/markets',
         type: 'GET',
         success: function(resp){
-          if(resp != resp){
+          if(resp != null){
             var options='';
             $.each(resp, function(i, value){
               var name = value[1];
