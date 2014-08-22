@@ -188,6 +188,7 @@ zh-CN:
         name: "姓名"
         channel: "渠道"
         comment: "备注"
+        created_at: "沟通时间"
     errors:
       template: # ~ 2.3.5 backward compatible
         header:

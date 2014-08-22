@@ -5,11 +5,13 @@ table data-role="table" id="movie-table" data-mode="reflow" class="ui-responsive
       th = Communication.human_attribute_name(:name)
       th = Communication.human_attribute_name(:channel)
       th = Communication.human_attribute_name(:comment)
+      th = Communication.human_attribute_name(:created_at)
   tbody
     - @communications.each do |communication|
       tr
         td = communication.name
         td = t("communication.channel.#{communication.channel}")
         td = communication.comment
+        td = format_datetime(communication.created_at)
 ul class="pagination"
     = paginate @communications
