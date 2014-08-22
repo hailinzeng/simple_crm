@@ -1,8 +1,6 @@
-= render 'customers/search'
-
 = link_to '', href=new_customer_path, class: 'ui-btn-right', 'data-role'=>'button', 'data-icon' => 'plus', 'data-inline' => true, 'data-iconpos' => 'notext'
 = render 'customers/profile'
-- unless @customer.nil?
+- unless @customer.new_record?
   = render 'communications/list'
   div
     = link_to t("label_more"), href=customer_communications_path(@customer), "data-role" => "button", "data-inline" => true

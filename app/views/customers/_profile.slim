@@ -37,23 +37,30 @@
     div class="ui-block-b"
       span = @remote_customer['subscribe_count']
 
-  - if @customer.present?
-    = form_for @customer, method: :patch do |f|
-      div data-role="fieldcontain"
-        = f.label :market, Customer.human_attribute_name(:market) + ":"
-        = f.select :market_id, options_for_select(market_names(f.object), f.object.market_name), {}, id: 'marketId'
-        = f.label :company, Customer.human_attribute_name(:company) + ":"
-        = f.text_field :company
-        = f.label :career, Customer.human_attribute_name(:career) + ":"
-        = f.text_field :career
-        = f.label :scale, Customer.human_attribute_name(:scale) + ":"
-        = f.text_field :scale
-        = f.label :department, Customer.human_attribute_name(:department) + ":"
-        = f.text_field :department
-        = f.label :qq, Customer.human_attribute_name(:qq) + ":"
-        = f.text_field :qq
-        = f.label :weixin, Customer.human_attribute_name(:weixin) + ":"
-        = f.text_field :weixin
-        = f.label :address, Customer.human_attribute_name(:address) + ":"
-        = f.text_field :address
+  - if @customer.new_record?
+    = form_for @customer, method: :post, remote: true do |f|
+      = render 'new', { f: f }
+      = f.hidden_field :province_id, value: @remote_customer['province_std_id']
+      = f.hidden_field :city_id, value: @remote_customer['city_std_id']
+      = f.hidden_field :name, value: @remote_customer['name']
+      = f.hidden_field :mobile, value: @remote_customer['mobile']
       = f.submit t("label_save"), "data-inline" => true
+  - else
+    = form_for @customer, method: :patch do |f|
+      = render 'new', { f: f }
+      = f.submit t("label_save"), "data-inline" => true
+
+= javascript_include_tag 'province'
+javascript:
+  // 获取市场
+  var city_id = $('#customer_city_id').val();
+  if(city_id) getMarkets(city_id);
+
+  // 异步添加客户成功回调
+  $(document).on('ajax:success', '#new_customer', function(e, resp) {
+    if(resp.success){
+      window.location.href = '/customers/' + resp.data.customer_id;
+    }else{
+      alert(resp.msg);
+    }
+  });

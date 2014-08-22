@@ -4,5 +4,7 @@ class CreateProvinces < ActiveRecord::Migration
       t.string   :name            # 省份
       t.integer  :province_id
     end
+
+    add_index :provinces, :province_id
   end
 end
