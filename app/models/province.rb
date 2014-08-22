@@ -13,4 +13,8 @@ class Province < ActiveRecord::Base
     [['不限城市', 'no']] + self.cities.pluck(:name, :city_id)
   end
 
+  def self.find_by_id(id)
+    Province.where(province_id: id).first
+  end
+
 end

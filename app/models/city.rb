@@ -27,4 +27,8 @@ class City < ActiveRecord::Base
     self.markets.pluck(:name, :id)
   end
 
+  def self.find_by_id(id)
+    City.where(city_id: id).first
+  end
+
 end

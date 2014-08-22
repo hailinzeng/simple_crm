@@ -9,8 +9,8 @@ h3 = t('label_my_customers')
     tbody  
       - @customers.each do |customer|
         tr
-          td = link_to customer.name, href=search_customers_path(mobile: customer.mobile, name: customer.name)
-          td = link_to customer.mobile, href=search_customers_path(mobile: customer.mobile, name: customer.name)
+          td = link_to customer.name, href=customer_path(customer)
+          td = link_to customer.mobile, href=customer_path(customer)
           td = format_datetime(customer.created_at)
   ul class="pagination"
       = paginate @customers

@@ -4,8 +4,8 @@ class Customer < ActiveRecord::Base
   CAREERS = { '企业主' => 'owner', '管理' => 'admin', '员工' => 'staff', '财务' => 'financer', '其它' => 'other'}
 
   belongs_to :user
-  belongs_to :city
-  belongs_to :province
+  belongs_to :city, primary_key: :city_id
+  belongs_to :province, primary_key: :province_id
 
   has_many :communications
 

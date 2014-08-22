@@ -54,17 +54,16 @@ class CustomersController < ApplicationController
   def search
     @customer = Customer.search_by(params[:name], params[:mobile]).first
     @remote_customer = get_remote_customer
-    # 如果本地没有该客户，则实时获取，否则取本地数据库
-    if @customer.nil? && @remote_customer.nil?
-      flash[:warning] = t('user_not_exist')
-      redirect_to profile_index_path
-    else
-      if @customer.present? # 本地存在该客户时可查看增加沟通记录
-        redirect_to customer_path(@customer)
+    if @customer.nil?
+      if @remote_customer.blank?
+        flash[:warning] = t('user_not_exist')
+        redirect_to profile_index_path
       else
         @customer = Customer.new
         render 'show', layout: "session"
       end
+    else
+      redirect_to customer_path(@customer)
     end
   end
 
@@ -129,13 +128,11 @@ class CustomersController < ApplicationController
     end
 
     def get_remote_customer
-        opts = {}
-        opts[:name] = params[:name]   if params[:name].present?
-      opts[:mobile] = params[:mobile] if params[:mobile].present?
+      opts = { name: @customer.name, mobile: @customer.mobile }
       resp = Nestful.post "#{GATEWAY_URL}/crm/getOneUserActiveData", opts rescue nil
       unless resp.nil?
-        customer = JSON.parse(resp.body)['data'] 
-        return customer.blank? ? nil : customer
+        customer = resp.decoded['data'] 
+        return customer.blank? ? {} : customer
       end
     end
 
@@ -145,7 +142,7 @@ class CustomersController < ApplicationController
       if resp.nil?
         flash[:error] = '服务器请求错误。'
       else
-        return JSON.parse(resp.body)['data']
+        return resp.decoded['data']
       end
     end
 
