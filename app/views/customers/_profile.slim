@@ -1,6 +1,6 @@
 - if customer.is_a?(Hash)
   div data-role="fieldcontain"
-    = label_tag customer[:name] + '   ' + customer[:province_name] + customer[:city_name]
+    = label_tag customer[:name].to_s + '   ' + customer[:province_name].to_s + customer[:city_name].to_s
     = label_tag customer[:mobile]
 
   div class="ui-grid-a"
