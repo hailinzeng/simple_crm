@@ -128,7 +128,7 @@ class CustomersController < ApplicationController
     end
 
     def get_remote_customer
-      opts = { name: @customer.name, mobile: @customer.mobile }
+      opts = { name: @customer.try(:name), mobile: @customer.try(:mobile) }
       resp = Nestful.post "#{GATEWAY_URL}/crm/getOneUserActiveData", opts rescue nil
       unless resp.nil?
         customer = resp.decoded['data'] 
