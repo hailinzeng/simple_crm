@@ -1,6 +1,6 @@
 div data-role="fieldcontain"
   = f.label :market, Customer.human_attribute_name(:market) + ":"
-  = f.select :market_id, options_for_select(market_names(f.object), f.object.market_name), {}, id: 'marketId'
+  = f.select :market_id, options_for_select(market_names(f.object), f.object.market_id), {}, id: 'marketId'
   = f.label :scale, Customer.human_attribute_name('scale') + '(' + '车位数量' + ')'
   = f.text_field :scale, required: 'required'
   = f.label :address, Customer.human_attribute_name('address') + '(' + '所属市场区域门牌号' + ')'
